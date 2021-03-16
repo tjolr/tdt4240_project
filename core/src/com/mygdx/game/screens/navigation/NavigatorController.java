@@ -2,11 +2,15 @@ package com.mygdx.game.screens.navigation;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.screens.game.GameView;
+import com.mygdx.game.screens.game_setup.GameSetupView;
 import com.mygdx.game.screens.main_menu.MainMenuView;
+import com.mygdx.game.screens.settings.SettingsView;
 
 public class NavigatorController implements Disposable {
 
     private Screen screen;
+
     public NavigatorController() {
         this.changeScreen(NavigationModel.NavigationScreen.MAINMENU);
     }
@@ -14,11 +18,24 @@ public class NavigatorController implements Disposable {
     public void changeScreen(NavigationModel.NavigationScreen screen) {
         switch(screen) {
             case MAINMENU:
-                MainMenuView mainMenuView = new MainMenuView();
+                MainMenuView mainMenuView = new MainMenuView(this);
                 this.setScreen(mainMenuView);
-
+                break;
+            case GAMESETUP:
+                GameSetupView gameSetupView = new GameSetupView(this);
+                this.setScreen(gameSetupView);
+                break;
+            case SETTINGS:
+                SettingsView settingsView = new SettingsView(this);
+                this.setScreen(settingsView);
+                break;
+            case GAME:
+                GameView gameView = new GameView(this);
+                this.setScreen(gameView);
+                break;
         }
     }
+
 
     public void setScreen(Screen screen) {
         if (this.screen != null) {
@@ -42,4 +59,6 @@ public class NavigatorController implements Disposable {
         }
         this.screen = null;
     }
+
+
 }
