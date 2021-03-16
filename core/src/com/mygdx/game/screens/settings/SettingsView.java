@@ -1,4 +1,4 @@
-package com.mygdx.game.screens.main_menu;
+package com.mygdx.game.screens.settings;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -13,14 +13,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
-public class MainMenuView implements Screen {
+public class SettingsView implements Screen {
 
-    private static final String TEXT_PLAY = "PLAY NOW";
-    private static final String TEXT_SETTINGS = "SETTINGS";
+    private static final String TEXT_MAIN_MENU = "MAIN MENU";
     private Stage stage;
     private NavigatorController navigatorController;
 
-    public MainMenuView(NavigatorController navigatorController) {
+    public SettingsView(NavigatorController navigatorController) {
         this.navigatorController = navigatorController;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -34,30 +33,18 @@ public class MainMenuView implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
 
-        TextButton playButton = new TextButton(TEXT_PLAY, skin);
-        TextButton settingsButton = new TextButton(TEXT_SETTINGS, skin);
-
+        TextButton mainMenuButton = new TextButton(TEXT_MAIN_MENU, skin);
         float textSize = 6f;
-        playButton.getLabel().setFontScale(textSize);
-        settingsButton.getLabel().setFontScale(textSize);
+        mainMenuButton.getLabel().setFontScale(textSize);
 
-        table.add(playButton).fillX().uniformX();
+        table.add(mainMenuButton).fillX().uniformX();
 
         table.row().pad(20, 0 , 20, 0);
 
-        table.add(settingsButton).fillX().uniformX();
-
-        playButton.addListener(new ChangeListener() {
+        mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-            navigatorController.changeScreen(NavigationModel.NavigationScreen.GAMESETUP);
-            }
-        });
-
-        settingsButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                navigatorController.changeScreen(NavigationModel.NavigationScreen.SETTINGS);
+                navigatorController.changeScreen(NavigationModel.NavigationScreen.MAINMENU);
             }
         });
     }
@@ -73,7 +60,7 @@ public class MainMenuView implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width, height, true);
+
     }
 
     @Override
@@ -93,6 +80,6 @@ public class MainMenuView implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+
     }
 }
