@@ -7,7 +7,7 @@ public class VelocityComponent implements Component {
     public final Vector2 velocity;
 
     public VelocityComponent (float velocityX, float velocityY) {
-        velocity = new Vector2(velocityX, velocityY)
+        velocity = new Vector2(velocityX, velocityY);
     }
 
     public VelocityComponent () {
