@@ -2,9 +2,13 @@ package com.mygdx.game.screens.game_setup;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -14,30 +18,49 @@ import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
 public class GameSetupView implements Screen {
+    private NavigatorController navigatorController;
+    private GameSetupController gameSetupController;
+    private GameSetupModel gameSetupModel;
 
     private static final String TEXT_START = "START NOW";
+    private static final String TEXT_HOST_GAME = "HOST GAME";
+    private static final String TEXT_JOIN = "Join";
     private Stage stage;
-    private NavigatorController navigatorController;
 
-    public GameSetupView(NavigatorController navigatorController) {
+
+    public GameSetupView(
+            NavigatorController navigatorController,
+            GameSetupController gameSetupController,
+            GameSetupModel gameSetupModel
+    ) {
         this.navigatorController = navigatorController;
+        this.gameSetupController = gameSetupController;
+        this.gameSetupModel = gameSetupModel;
+
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
-        Table table = new Table();
-        table.setFillParent(true);
-        stage.addActor(table);
+        Table rootTable = new Table();
+        rootTable.setFillParent(true);
+        stage.addActor(rootTable);
 
         Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
 
         TextButton startButton = new TextButton(TEXT_START, skin);
-        float textSize = 6f;
+        TextButton hostGameButton = new TextButton(TEXT_HOST_GAME, skin);
+        float textSize = 5f;
         startButton.getLabel().setFontScale(textSize);
+        hostGameButton.getLabel().setFontScale(textSize);
 
-        table.add(startButton).fillX().uniformX();
+
+        rootTable.row().pad(50, 0 , 20, 0);
+        rootTable.add(startButton).uniformX();
+        rootTable.row().pad(20, 0 , 20, 0);
+        rootTable.add(hostGameButton).uniformX();
+        rootTable.row().pad(20, 0 , 20, 0);
 
         startButton.addListener(new ChangeListener() {
             @Override
@@ -45,6 +68,38 @@ public class GameSetupView implements Screen {
             navigatorController.changeScreen(NavigationModel.NavigationScreen.GAME);
             }
         });
+
+        Label otherGamesTitle = new Label("Join another game: ", skin);
+        otherGamesTitle.setFontScale(textSize);
+        rootTable.add(otherGamesTitle);
+        rootTable.row();
+
+        Table otherGamesTable = new Table();
+        ScrollPane scrollPane = new ScrollPane(otherGamesTable, skin);
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setColor(Color.DARK_GRAY);
+        rootTable.add(scrollPane).size(1000,500);
+        rootTable.row();
+
+        for (String availableGame: this.gameSetupModel.getAvailableGames()){
+            Label gameLabel = new Label(availableGame +" ", skin);
+            TextButton joinButton = new TextButton(TEXT_JOIN,skin);
+
+            gameLabel.setFontScale(textSize);
+            joinButton.getLabel().setFontScale(textSize);
+
+            otherGamesTable.add(gameLabel);
+            otherGamesTable.add(joinButton);
+
+            otherGamesTable.row();
+
+            joinButton.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Joining game");
+                }
+            });
+        }
     }
 
     @Override

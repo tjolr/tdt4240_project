@@ -1,8 +1,11 @@
 package com.mygdx.game.screens.navigation;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.screens.game.GameView;
+import com.mygdx.game.screens.game_setup.GameSetupController;
+import com.mygdx.game.screens.game_setup.GameSetupModel;
 import com.mygdx.game.screens.game_setup.GameSetupView;
 import com.mygdx.game.screens.main_menu.MainMenuView;
 import com.mygdx.game.screens.settings.SettingsView;
@@ -22,7 +25,9 @@ public class NavigatorController implements Disposable {
                 this.setScreen(mainMenuView);
                 break;
             case GAMESETUP:
-                GameSetupView gameSetupView = new GameSetupView(this);
+                GameSetupModel gameSetupModel = new GameSetupModel();
+                GameSetupController gameSetupController = new GameSetupController(gameSetupModel);
+                GameSetupView gameSetupView = new GameSetupView(this, gameSetupController, gameSetupModel);
                 this.setScreen(gameSetupView);
                 break;
             case SETTINGS:
