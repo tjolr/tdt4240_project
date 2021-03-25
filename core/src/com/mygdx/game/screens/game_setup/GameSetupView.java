@@ -14,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.game_state.GameStateController;
+import com.mygdx.game.game_state.GameStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
@@ -22,11 +24,12 @@ public class GameSetupView implements Screen {
     private GameSetupController gameSetupController;
     private GameSetupModel gameSetupModel;
 
+    private GameStateController gameStateController;
+
     private static final String TEXT_START = "START NOW";
     private static final String TEXT_HOST_GAME = "HOST GAME";
     private static final String TEXT_JOIN = "Join";
     private Stage stage;
-
 
     public GameSetupView(
             NavigatorController navigatorController,
@@ -37,6 +40,7 @@ public class GameSetupView implements Screen {
         this.gameSetupController = gameSetupController;
         this.gameSetupModel = gameSetupModel;
 
+        this.gameStateController = GameStateController.GameStateController();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
@@ -45,6 +49,7 @@ public class GameSetupView implements Screen {
     public void show() {
         Table rootTable = new Table();
         rootTable.setFillParent(true);
+
         stage.addActor(rootTable);
 
         Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
@@ -68,6 +73,15 @@ public class GameSetupView implements Screen {
             navigatorController.changeScreen(NavigationModel.NavigationScreen.GAME);
             }
         });
+        hostGameButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+            gameStateController.setUserAsGameHost();
+            navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
+            }
+        });
+
+
 
         Label otherGamesTitle = new Label("Join another game: ", skin);
         otherGamesTitle.setFontScale(textSize);
