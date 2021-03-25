@@ -1,4 +1,4 @@
-package com.mygdx.game.screens.main_menu;
+package com.mygdx.game.screens.set_name;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -8,56 +8,53 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.game_state.GameStateController;
+import com.mygdx.game.game_state.GameStateModel;
+import com.mygdx.game.screens.game_setup.GameSetupController;
+import com.mygdx.game.screens.game_setup.GameSetupModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
-public class MainMenuView implements Screen {
-
-    private static final String TEXT_PLAY = "PLAY NOW";
-    private static final String TEXT_SETTINGS = "SETTINGS";
-    private Stage stage;
+public class SetNameView implements Screen {
     private NavigatorController navigatorController;
+    private GameStateController gameStateController;
+    private GameStateModel gameStateModel;
+    private Stage stage;
 
-    public MainMenuView(NavigatorController navigatorController) {
+    public SetNameView(NavigatorController navigatorController
+    ){
         this.navigatorController = navigatorController;
-        stage = new Stage(new ScreenViewport());
+        this.gameStateController = GameStateController.GameStateController();
+
+        this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
-        Table table = new Table();
-        table.setFillParent(true);
-        stage.addActor(table);
-
+        Table rootTable = new Table();
+        rootTable.setFillParent(true);
+        stage.addActor(rootTable);
         Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
+        skin.getFont("font").getData().setScale(5f);
 
-        TextButton playButton = new TextButton(TEXT_PLAY, skin);
-        TextButton settingsButton = new TextButton(TEXT_SETTINGS, skin);
+        final TextField usernameField = new TextField("Name", skin);
+        usernameField.setMaxLength(12);
+        TextButton submitButton = new TextButton("Submit", skin);
 
-        float textSize = 6f;
-        playButton.getLabel().setFontScale(textSize);
-        settingsButton.getLabel().setFontScale(textSize);
 
-        table.add(playButton).fillX().uniformX();
+        rootTable.add(usernameField).width(500);
+        rootTable.row().padTop(60);
+        rootTable.add(submitButton).width(500).uniformX();
 
-        table.row().pad(20, 0 , 20, 0);
-
-        table.add(settingsButton).fillX().uniformX();
-
-        playButton.addListener(new ChangeListener() {
+        submitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-            navigatorController.changeScreen(NavigationModel.NavigationScreen.SET_NAME);
-            }
-        });
-
-        settingsButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                navigatorController.changeScreen(NavigationModel.NavigationScreen.SETTINGS);
+                gameStateController.setUsername(usernameField.getText());
+                navigatorController.changeScreen(NavigationModel.NavigationScreen.GAMESETUP);
             }
         });
     }
@@ -74,6 +71,7 @@ public class MainMenuView implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+
     }
 
     @Override
@@ -93,6 +91,6 @@ public class MainMenuView implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+
     }
 }

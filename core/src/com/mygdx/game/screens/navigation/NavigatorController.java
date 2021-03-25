@@ -8,6 +8,10 @@ import com.mygdx.game.screens.game_setup.GameSetupController;
 import com.mygdx.game.screens.game_setup.GameSetupModel;
 import com.mygdx.game.screens.game_setup.GameSetupView;
 import com.mygdx.game.screens.main_menu.MainMenuView;
+import com.mygdx.game.screens.room.RoomController;
+import com.mygdx.game.screens.room.RoomModel;
+import com.mygdx.game.screens.room.RoomView;
+import com.mygdx.game.screens.set_name.SetNameView;
 import com.mygdx.game.screens.settings.SettingsView;
 
 public class NavigatorController implements Disposable {
@@ -24,11 +28,21 @@ public class NavigatorController implements Disposable {
                 MainMenuView mainMenuView = new MainMenuView(this);
                 this.setScreen(mainMenuView);
                 break;
+            case SET_NAME:
+                SetNameView setNameView = new SetNameView(this);
+                this.setScreen(setNameView);
+                break;
             case GAMESETUP:
                 GameSetupModel gameSetupModel = new GameSetupModel();
                 GameSetupController gameSetupController = new GameSetupController(gameSetupModel);
                 GameSetupView gameSetupView = new GameSetupView(this, gameSetupController, gameSetupModel);
                 this.setScreen(gameSetupView);
+                break;
+            case ROOM:
+                RoomModel roomModel = new RoomModel();
+                RoomController roomController = new RoomController(roomModel);
+                RoomView roomView = new RoomView(this, roomController, roomModel);
+                this.setScreen(roomView);
                 break;
             case SETTINGS:
                 SettingsView settingsView = new SettingsView(this);
