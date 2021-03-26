@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
 import com.mygdx.game.ecs.systems.RenderSystem;
@@ -19,36 +20,11 @@ public class GameView implements Screen {
     private Stage stage;
     private NavigatorController navigatorController;
 
-    private PooledEngine engine;
-
     public GameView(NavigatorController navigatorController) {
         this.navigatorController = navigatorController;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        initializeEngine();
-    }
-
-    private void initializeEngine() {
-        this.engine = new PooledEngine();
-
-        // Todo: extract player creation to its own factory
-        Entity player = engine.createEntity();
-
-        PositionComponent position = engine.createComponent(PositionComponent.class);
-        SpriteComponent sprite = engine.createComponent(SpriteComponent.class);
-
-        Texture playerSprite = new Texture("sprites/player.png");
-        sprite.textureRegion = new TextureRegion(playerSprite);
-
-        position.position.x = 200;
-        position.position.y = 200;
-
-        player.add(position);
-        player.add(sprite);
-
-        engine.addEntity(player);
-
-        engine.addSystem(new RenderSystem());
+        GameEngine.getInstance().initializeEngine();
     }
 
     @Override
@@ -63,7 +39,7 @@ public class GameView implements Screen {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-        engine.update(delta);
+        GameEngine.getInstance().update(delta);
     }
 
     @Override
