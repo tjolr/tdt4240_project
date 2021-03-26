@@ -110,7 +110,7 @@ public class GameSetupView implements Screen {
             joinButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Joining game");
+                navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
                 }
             });
         }
