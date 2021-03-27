@@ -1,30 +1,47 @@
 package com.mygdx.game.screens.game;
 
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.ecs.GameEngine;
-import com.mygdx.game.ecs.components.PositionComponent;
-import com.mygdx.game.ecs.components.SpriteComponent;
-import com.mygdx.game.ecs.systems.RenderSystem;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
 public class GameView implements Screen {
-
     private Stage stage;
     private NavigatorController navigatorController;
 
     public GameView(NavigatorController navigatorController) {
         this.navigatorController = navigatorController;
         stage = new Stage(new ScreenViewport());
+
+        initializeTouchpad(stage);
         Gdx.input.setInputProcessor(stage);
         GameEngine.getInstance().initializeEngine();
+    }
+
+    private void initializeTouchpad(Stage stage) {
+        Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
+        float sizeFactor = 0.14f;
+        float heightFactor = 0.2f;
+        float widthFactor = 0.18f;
+        int deadzoneRadius = 20;
+
+        Touchpad move = new Touchpad(deadzoneRadius, skin);
+        move.setSize(width * sizeFactor, width * sizeFactor);
+        move.setPosition(width * widthFactor, height * heightFactor);
+
+        Touchpad shoot = new Touchpad(deadzoneRadius, skin);
+        shoot.setSize(width * sizeFactor, width * sizeFactor);
+        shoot.setPosition(width * (1f - widthFactor) - shoot.getWidth(), height * heightFactor);
+
+        stage.addActor(move);
+        stage.addActor(shoot);
     }
 
     @Override
@@ -38,8 +55,8 @@ public class GameView implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-        stage.draw();
         GameEngine.getInstance().update(delta);
+        stage.draw();
     }
 
     @Override
