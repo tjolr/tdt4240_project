@@ -23,6 +23,9 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    dependencies {
+        implementation'com.google.android.gms:play-services-nearby:11.8.0'
+    }
     buildTypes {
         release {
             minifyEnabled true
