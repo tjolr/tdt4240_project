@@ -3,11 +3,14 @@ package com.mygdx.game.screens.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.ecs.GameEngine;
+import com.mygdx.game.ecs.systems.PlayerControlSystem;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
 public class GameView implements Screen {
@@ -35,6 +38,14 @@ public class GameView implements Screen {
         Touchpad move = new Touchpad(deadzoneRadius, skin);
         move.setSize(width * sizeFactor, width * sizeFactor);
         move.setPosition(width * widthFactor, height * heightFactor);
+        move.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                float deltaX = ((Touchpad) actor).getKnobPercentX();
+                float deltaY = ((Touchpad) actor).getKnobPercentY();
+                PlayerControlSystem.setMoveJoystick(deltaX, deltaY);
+            }
+        });
 
         Touchpad shoot = new Touchpad(deadzoneRadius, skin);
         shoot.setSize(width * sizeFactor, width * sizeFactor);
