@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "60684918856",
+    "project_id": "progark-game",
+    "storage_bucket": "progark-game.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60684918856:android:6ef28d6e886b44d91a787d",
+        "android_client_info": {
+          "package_name": "com.mygdx.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60684918856-pvknk0883084e3rjqn08qs8hiqcr6tmn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM17aeGN3oU2YzOaUEW0WanoAU8fFcMOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60684918856-pvknk0883084e3rjqn08qs8hiqcr6tmn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
