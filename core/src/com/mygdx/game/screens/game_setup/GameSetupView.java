@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -14,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.firebase.FirebaseController;
 import com.mygdx.game.game_state.GameStateController;
-import com.mygdx.game.game_state.GameStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
@@ -25,6 +24,7 @@ public class GameSetupView implements Screen {
     private GameSetupModel gameSetupModel;
 
     private GameStateController gameStateController;
+    private FirebaseController firebaseController;
 
     private static final String TEXT_START = "START NOW";
     private static final String TEXT_HOST_GAME = "HOST GAME";
@@ -40,6 +40,7 @@ public class GameSetupView implements Screen {
         this.gameSetupController = gameSetupController;
         this.gameSetupModel = gameSetupModel;
 
+        this.firebaseController = FirebaseController.getInstance();
         this.gameStateController = GameStateController.GameStateController();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -76,8 +77,10 @@ public class GameSetupView implements Screen {
         hostGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-            gameStateController.setUserAsGameHost();
-            navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
+                gameStateController.setUserAsGameHost();
+                firebaseController.writeToDb("test", "this works!");
+                navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
+
             }
         });
 
