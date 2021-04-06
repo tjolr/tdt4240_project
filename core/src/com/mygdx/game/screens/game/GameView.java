@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.systems.PlayerControlSystem;
+import com.mygdx.game.ecs.systems.PlayerDirectionSystem;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
 public class GameView implements Screen {
@@ -50,6 +51,14 @@ public class GameView implements Screen {
         Touchpad shoot = new Touchpad(deadzoneRadius, skin);
         shoot.setSize(width * sizeFactor, width * sizeFactor);
         shoot.setPosition(width * (1f - widthFactor) - shoot.getWidth(), height * heightFactor);
+        shoot.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                float deltaX = ((Touchpad) actor).getKnobPercentX();
+                float deltaY = ((Touchpad) actor).getKnobPercentY();
+                PlayerDirectionSystem.setDirectionJoystick(deltaX, deltaY);
+            }
+        });
 
         stage.addActor(move);
         stage.addActor(shoot);
