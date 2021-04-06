@@ -3,6 +3,7 @@ package com.mygdx.game.ecs;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.mygdx.game.ecs.entities.EntityFactory;
+import com.mygdx.game.ecs.systems.MovementSystem;
 import com.mygdx.game.ecs.systems.PlayerControlSystem;
 import com.mygdx.game.ecs.systems.RenderSystem;
 
@@ -30,5 +31,6 @@ public class GameEngine extends PooledEngine {
 
         gameEngineInstance.addSystem(new RenderSystem());
         gameEngineInstance.addSystem(new PlayerControlSystem());
+        gameEngineInstance.addSystem(new MovementSystem());
     }
 }
