@@ -18,7 +18,8 @@ public class FirebaseController implements FirebaseInterface {
     }
 
     @Override
-    public void writeToDb(String target, String value) {
+    public void writeToDb(String target, Object value) {
         firebaseInterface.writeToDb(target, value);
     }
+
 }
