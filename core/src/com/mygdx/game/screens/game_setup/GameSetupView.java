@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.firebase.FirebaseController;
 import com.mygdx.game.game_state.GameStateController;
+import com.mygdx.game.game_state.GameStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
@@ -22,9 +23,6 @@ public class GameSetupView implements Screen {
     private NavigatorController navigatorController;
     private GameSetupController gameSetupController;
     private GameSetupModel gameSetupModel;
-
-    private GameStateController gameStateController;
-    private FirebaseController firebaseController;
 
     private static final String TEXT_START = "START NOW";
     private static final String TEXT_HOST_GAME = "HOST GAME";
@@ -40,8 +38,6 @@ public class GameSetupView implements Screen {
         this.gameSetupController = gameSetupController;
         this.gameSetupModel = gameSetupModel;
 
-        this.firebaseController = FirebaseController.getInstance();
-        this.gameStateController = GameStateController.GameStateController();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
@@ -77,13 +73,10 @@ public class GameSetupView implements Screen {
         hostGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameStateController.setUserAsGameHost();
-                firebaseController.writeToDb("test", "this works!");
-                navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
-
+            gameSetupController.hostCreateGame();
+            navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
             }
         });
-
 
 
         Label otherGamesTitle = new Label("Join another game: ", skin);
