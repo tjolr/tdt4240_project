@@ -7,9 +7,11 @@ public class EntityFactory {
     private static EntityFactory entityFactoryInstance = null;
 
     PlayerFactory playerFactory;
+    BotFactory botFactory;
 
     private EntityFactory() {
         playerFactory = PlayerFactory.getInstance();
+        botFactory = BotFactory.getInstance();
     }
 
     public static EntityFactory getInstance() {
@@ -21,5 +23,9 @@ public class EntityFactory {
 
     public Entity createPlayer(float x, float y) {
         return playerFactory.createPlayer(x, y);
+    }
+
+    public Entity createZombie(float x, float y) {
+        return botFactory.createZombie(x, y);
     }
 }

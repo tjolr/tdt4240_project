@@ -38,6 +38,8 @@ public class PlayerFactory {
         position.position.x = x;
         position.position.y = y;
 
+        velocity.speed = 500;
+
         player.add(position);
         player.add(velocity);
         player.add(sprite);
