@@ -23,8 +23,7 @@ public class MovementSystem extends IteratingSystem {
         PositionComponent position = positionMapper.get(entity);
         VelocityComponent velocity = velocityMapper.get(entity);
 
-        // The number should be between 300-600
-        position.position.add(velocity.velocity.scl(deltaTime * 400));
+        position.position.add(velocity.velocity.scl(deltaTime * velocity.speed));
     }
 }
 
