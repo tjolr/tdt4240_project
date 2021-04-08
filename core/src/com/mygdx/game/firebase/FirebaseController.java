@@ -1,7 +1,9 @@
 package com.mygdx.game.firebase;
 
-import com.mygdx.game.items.GameModel;
+import com.mygdx.game.items.SimpleGameModel;
 import com.mygdx.game.screens.game_setup.GameSetupController;
+
+import java.util.ArrayList;
 
 public class FirebaseController implements FirebaseInterface {
     private static FirebaseController firebaseControllerInstance = null;
@@ -29,11 +31,17 @@ public class FirebaseController implements FirebaseInterface {
     }
 
     @Override
+    public void appendToArrayInDb(String target, Object value) {
+        firebaseInterface.appendToArrayInDb(target, value);
+    }
+
+    @Override
     public void listenToAvailableGames() {
         firebaseInterface.listenToAvailableGames();
     }
 
-    public void addAvailableGame(GameModel gameModel) {
-        gameSetupController.addAvailableGame(gameModel);
+
+    public void setAvailableGames(ArrayList<SimpleGameModel> availableGames) {
+        gameSetupController.addAvailableGame(availableGames);
     }
 }

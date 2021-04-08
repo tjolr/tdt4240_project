@@ -13,10 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.items.GameModel;
+import com.mygdx.game.items.SimpleGameModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GameSetupView implements Screen {
@@ -33,7 +34,8 @@ public class GameSetupView implements Screen {
     private Table availableGamesTable;
     private float textSize;
     private Skin skin;
-    private Iterator<GameModel> iter;
+    private Iterator<SimpleGameModel> iter;
+    private ArrayList<SimpleGameModel> availableGames;
 
 
     public GameSetupView(
@@ -45,13 +47,13 @@ public class GameSetupView implements Screen {
         this.gameSetupController = gameSetupController;
         this.gameSetupModel = gameSetupModel;
 
+        this.availableGames = new ArrayList<>();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
-        System.out.println("GameSetupView Show!");
         rootTable = new Table();
         rootTable.setFillParent(true);
 
@@ -98,20 +100,33 @@ public class GameSetupView implements Screen {
         scrollPane.setColor(Color.DARK_GRAY);
         rootTable.add(scrollPane).size(1000,500);
         rootTable.row();
-
-
     }
+
+    // saving a local copy of previously rendered available games
+    // to prevent double rendering
+    private ArrayList<SimpleGameModel> getNewAvailableGames() {
+        ArrayList<SimpleGameModel> gamesToAdd = new ArrayList<>();
+        for(final SimpleGameModel gameModel: this.gameSetupModel.getAvailableGames()) {
+            if (!availableGames.stream().anyMatch(o -> o.getGameId().equals(gameModel.gameId))) {
+                availableGames.add(gameModel);
+                gamesToAdd.add(gameModel);
+            }
+        }
+
+        return gamesToAdd;
+    }
+
+
 
     @Override
     public void render(float delta) {
-
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        availableGamesTable.clear();
-        iter = this.gameSetupModel.getAvailableGames().iterator();
-        while(iter.hasNext()) {
-            GameModel availableGame = iter.next();
+        iter = this.getNewAvailableGames().iterator();
+
+        while (iter.hasNext()) {
+            final SimpleGameModel availableGame = iter.next();
 
             Label gameLabel = new Label(availableGame.gameId +" ", skin);
             TextButton joinButton = new TextButton(TEXT_JOIN,skin);
@@ -127,11 +142,12 @@ public class GameSetupView implements Screen {
             joinButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
+                gameSetupController.playerJoinGame(availableGame);
+                navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
                 }
             });
+            iter.remove();
         }
-
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

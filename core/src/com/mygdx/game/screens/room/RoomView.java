@@ -76,7 +76,7 @@ public class RoomView implements Screen {
             playersTable.row();
         }
 
-        if (gameStateModel.getHost().equals(gameStateModel.getUsername())){
+        if (gameStateModel.getHost() != null && gameStateModel.getHost().equals(gameStateModel.getUsername())){
             TextButton startGameButton = new TextButton("START GAME", skin);
             rootTable.add(startGameButton).uniformX();
 
