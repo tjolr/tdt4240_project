@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.components.DirectionComponent;
+import com.mygdx.game.ecs.components.HealthComponent;
 import com.mygdx.game.ecs.components.PlayerComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
@@ -31,6 +32,7 @@ public class PlayerFactory {
         SpriteComponent sprite = GameEngine.getInstance().createComponent(SpriteComponent.class);
         PlayerComponent playerComponent = GameEngine.getInstance().createComponent(PlayerComponent.class);
         DirectionComponent direction = GameEngine.getInstance().createComponent(DirectionComponent.class);
+        HealthComponent health = GameEngine.getInstance().createComponent(HealthComponent.class);
 
         Texture playerSprite = new Texture("sprites/player.png");
         sprite.textureRegion = new TextureRegion(playerSprite);
@@ -40,11 +42,15 @@ public class PlayerFactory {
 
         velocity.speed = 500;
 
+        health.health = 100f;
+        health.maxHealth = 100f;
+
         player.add(position);
         player.add(velocity);
         player.add(sprite);
         player.add(playerComponent);
         player.add(direction);
+        player.add(health);
 
         return player;
     }
