@@ -2,6 +2,12 @@ package com.mygdx.game.ecs;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.ecs.components.DirectionComponent;
+import com.mygdx.game.ecs.components.PositionComponent;
+import com.mygdx.game.ecs.components.SpriteComponent;
 import com.mygdx.game.ecs.entities.EntityFactory;
 import com.mygdx.game.ecs.systems.HealthRenderSystem;
 import com.mygdx.game.ecs.systems.MovementSystem;
@@ -28,6 +34,7 @@ public class GameEngine extends PooledEngine {
     }
 
     public void initializeEngine() {
+        createBackground();
         Entity player = entityFactory.createPlayer(200, 200);
         Entity zombie = entityFactory.createZombie(600, 600);
 
@@ -40,5 +47,25 @@ public class GameEngine extends PooledEngine {
         gameEngineInstance.addSystem(new MovementSystem());
         gameEngineInstance.addSystem(new BotControlSystem());
         gameEngineInstance.addSystem(new HealthRenderSystem());
+    }
+
+    private void createBackground() {
+        Entity background = gameEngineInstance.createEntity();
+
+        PositionComponent position = gameEngineInstance.createComponent(PositionComponent.class);
+        SpriteComponent sprite = gameEngineInstance.createComponent(SpriteComponent.class);
+        DirectionComponent direction = gameEngineInstance.createComponent(DirectionComponent.class);
+
+        position.position.x = 0;
+        position.position.y = 0;
+
+        Texture backgroundTexture = new Texture("sprites/background.png");
+        sprite.textureRegion = new TextureRegion(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        background.add(position);
+        background.add(sprite);
+        background.add(direction);
+
+        gameEngineInstance.addEntity(background);
     }
 }
