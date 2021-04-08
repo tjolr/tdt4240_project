@@ -7,9 +7,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.mygdx.game.items.GameModel;
+import com.mygdx.game.items.SimpleGameModel;
 
-import java.util.Map;
+import java.util.ArrayList;
 
 public class FirebaseService implements FirebaseInterface {
     FirebaseDatabase db;
@@ -41,19 +41,27 @@ public class FirebaseService implements FirebaseInterface {
     }
 
     @Override
+    public void appendToArrayInDb(String target, Object value) {
+        ref = getRefFromFullTarget(target);
+        ref.push().setValue(value);
+    }
+
+    @Override
     public void listenToAvailableGames() {
         ref = db.getReference();
         ref.child("game").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<SimpleGameModel> availableGames = new ArrayList<>();
                 for (DataSnapshot child: snapshot.getChildren()) {
-                    GameModel gameModel = child.getValue(GameModel.class);
+                    SimpleGameModel simpleGameModel = child.getValue(SimpleGameModel.class);
 
-                    if (gameModel.gameState == GameModel.GameState.SETUP){
-                        firebaseController.addAvailableGame(gameModel);
+                    if (simpleGameModel.gameState == SimpleGameModel.GameState.SETUP){
+                        availableGames.add(simpleGameModel);
                     }
                 }
+                firebaseController.setAvailableGames(availableGames);
             }
 
             @Override
@@ -61,8 +69,9 @@ public class FirebaseService implements FirebaseInterface {
                 System.out.println(error);
             }
         });
-
-
     }
+
+
+
 
 }

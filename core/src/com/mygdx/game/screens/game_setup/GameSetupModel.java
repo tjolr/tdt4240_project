@@ -1,13 +1,13 @@
 package com.mygdx.game.screens.game_setup;
 
 
-import com.mygdx.game.items.GameModel;
+import com.mygdx.game.items.SimpleGameModel;
 
 import java.util.ArrayList;
 
 public class GameSetupModel {
     private static GameSetupModel gameSetupModelInstance = null;
-    private ArrayList<GameModel> availableGames;
+    private ArrayList<SimpleGameModel> availableGames;
 
     private GameSetupModel() {
         this.availableGames = new ArrayList<>();
@@ -20,12 +20,13 @@ public class GameSetupModel {
         return gameSetupModelInstance;
     }
 
-    public ArrayList<GameModel> getAvailableGames() {
+    public ArrayList<SimpleGameModel> getAvailableGames() {
         return availableGames;
     }
 
-    public void addAvailableGame(GameModel availableGame) {
-        this.availableGames.add(availableGame);
+    public void setAvailableGames(ArrayList<SimpleGameModel> availableGames) {
+
+        this.availableGames = new ArrayList<SimpleGameModel>(availableGames);
     }
 
 }
