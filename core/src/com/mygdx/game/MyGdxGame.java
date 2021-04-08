@@ -21,7 +21,6 @@ public class MyGdxGame extends Game {
 	public void create () {
 		this.navigatorController = new NavigatorController();
 		firebaseController.setFirebaseInterface(firebaseInterface);
-		firebaseController.writeToDb("test", "FirebaseController writes to db!!");
 	}
 
 	@Override

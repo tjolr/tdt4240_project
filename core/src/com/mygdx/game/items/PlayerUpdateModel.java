@@ -6,6 +6,9 @@ public class PlayerUpdateModel {
     public float health;
     public Integer score;
 
+    // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    public PlayerUpdateModel() {}
+
     public PlayerUpdateModel(String player, float health, Integer score) {
         this.player = player;
         this.health = health;

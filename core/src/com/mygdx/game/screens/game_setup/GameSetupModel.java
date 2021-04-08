@@ -1,20 +1,30 @@
 package com.mygdx.game.screens.game_setup;
 
 
+import com.mygdx.game.items.GameModel;
+
 import java.util.ArrayList;
 
 public class GameSetupModel {
-    private ArrayList<String> availableGames;
+    private static GameSetupModel gameSetupModelInstance = null;
+    private ArrayList<GameModel> availableGames;
 
-    public GameSetupModel() {
+    private GameSetupModel() {
         this.availableGames = new ArrayList<>();
     }
 
-    public ArrayList<String> getAvailableGames() {
+    public static GameSetupModel getInstance() {
+        if (gameSetupModelInstance == null) {
+            gameSetupModelInstance = new GameSetupModel();
+        }
+        return gameSetupModelInstance;
+    }
+
+    public ArrayList<GameModel> getAvailableGames() {
         return availableGames;
     }
 
-    public void addAvailableGame(String availableGame) {
+    public void addAvailableGame(GameModel availableGame) {
         this.availableGames.add(availableGame);
     }
 

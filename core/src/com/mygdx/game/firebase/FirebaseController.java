@@ -1,10 +1,16 @@
 package com.mygdx.game.firebase;
 
+import com.mygdx.game.items.GameModel;
+import com.mygdx.game.screens.game_setup.GameSetupController;
+
 public class FirebaseController implements FirebaseInterface {
     private static FirebaseController firebaseControllerInstance = null;
     private FirebaseInterface firebaseInterface;
+    private GameSetupController gameSetupController;
 
-    private FirebaseController() {}
+    private FirebaseController() {
+        gameSetupController = GameSetupController.getInstance();
+    }
 
     public static FirebaseController getInstance() {
         if (firebaseControllerInstance == null) {
@@ -22,4 +28,12 @@ public class FirebaseController implements FirebaseInterface {
         firebaseInterface.writeToDb(target, value);
     }
 
+    @Override
+    public void listenToAvailableGames() {
+        firebaseInterface.listenToAvailableGames();
+    }
+
+    public void addAvailableGame(GameModel gameModel) {
+        gameSetupController.addAvailableGame(gameModel);
+    }
 }

@@ -9,24 +9,31 @@ import com.mygdx.game.items.PlayerUpdateModel;
 import java.util.ArrayList;
 
 public class GameSetupController {
+    private static GameSetupController gameSetupControllerInstance = null;
     private GameSetupModel gameSetupModel;
     private GameStateController gameStateController;
     private GameStateModel gameStateModel;
     private FirebaseController firebaseController;
 
-    public GameSetupController(GameSetupModel gameSetupModel) {
-        this.gameSetupModel = gameSetupModel;
-        this.firebaseController = FirebaseController.getInstance();
+    private GameSetupController() {
+        this.gameSetupModel = GameSetupModel.getInstance();
         this.gameStateController = GameStateController.GameStateController();
         this.gameStateModel = GameStateModel.GameStateModel();
 
-        // Temporary names just to render something on the UI
-        gameSetupModel.addAvailableGame("Anders");
-        gameSetupModel.addAvailableGame("Tjol");
-        gameSetupModel.addAvailableGame("Vidar");
-        gameSetupModel.addAvailableGame("Yalda");
-        gameSetupModel.addAvailableGame("Erna Solberg");
     }
+
+    public static GameSetupController getInstance() {
+        if (gameSetupControllerInstance == null) {
+            gameSetupControllerInstance = new GameSetupController();
+        }
+        return gameSetupControllerInstance;
+    }
+
+    public void setFirebaseController(FirebaseController firebaseController) {
+        this.firebaseController = firebaseController;
+        this.listenToAvailableGames();
+    }
+
 
     public void hostCreateGame(){
         gameStateController.setUserAsGameHost();
@@ -43,12 +50,21 @@ public class GameSetupController {
         String gameId = gameStateModel.getHost()+" game";
         GameModel gameModel = new GameModel(
             gameId,
+            GameModel.GameState.SETUP,
             gameStateModel.getHost(),
             players,
             playerUpdateModels
         );
 
         firebaseController.writeToDb("game." + gameId, gameModel);
+    }
+
+    public void listenToAvailableGames() {
+        this.firebaseController.listenToAvailableGames();
+    }
+
+    public void addAvailableGame(GameModel gameModel) {
+        gameSetupModel.addAvailableGame(gameModel);
     }
 
 }

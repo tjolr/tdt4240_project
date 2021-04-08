@@ -17,9 +17,12 @@ public class GameModel {
         RESULT
     }
 
-    public GameModel(String gameId, String host, ArrayList<String> players, ArrayList<PlayerUpdateModel> playerUpdateModels) {
+    // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    public GameModel() {}
+
+    public GameModel(String gameId, GameState gameState, String host, ArrayList<String> players, ArrayList<PlayerUpdateModel> playerUpdateModels) {
         this.gameId = gameId;
-        this.gameState = GameState.SETUP;
+        this.gameState = gameState;
         this.host = host;
         this.players = players;
         this.playerUpdateModels = playerUpdateModels;
