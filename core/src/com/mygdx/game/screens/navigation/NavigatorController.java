@@ -3,6 +3,7 @@ package com.mygdx.game.screens.navigation;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.firebase.FirebaseController;
 import com.mygdx.game.screens.game.GameView;
 import com.mygdx.game.screens.game_setup.GameSetupController;
 import com.mygdx.game.screens.game_setup.GameSetupModel;
@@ -17,9 +18,11 @@ import com.mygdx.game.screens.settings.SettingsView;
 public class NavigatorController implements Disposable {
 
     private Screen screen;
+    private FirebaseController firebaseController;
 
     public NavigatorController() {
         this.changeScreen(NavigationModel.NavigationScreen.MAINMENU);
+        firebaseController = FirebaseController.getInstance();
     }
 
     public void changeScreen(NavigationModel.NavigationScreen screen) {
@@ -33,8 +36,9 @@ public class NavigatorController implements Disposable {
                 this.setScreen(setNameView);
                 break;
             case GAMESETUP:
-                GameSetupModel gameSetupModel = new GameSetupModel();
-                GameSetupController gameSetupController = new GameSetupController(gameSetupModel);
+                GameSetupModel gameSetupModel = GameSetupModel.getInstance();
+                GameSetupController gameSetupController = GameSetupController.getInstance();
+                gameSetupController.setFirebaseController(firebaseController);
                 GameSetupView gameSetupView = new GameSetupView(this, gameSetupController, gameSetupModel);
                 this.setScreen(gameSetupView);
                 break;
