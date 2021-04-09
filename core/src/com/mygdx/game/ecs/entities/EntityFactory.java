@@ -8,10 +8,12 @@ public class EntityFactory {
 
     PlayerFactory playerFactory;
     BotFactory botFactory;
+    BulletFactory bulletFactory;
 
     private EntityFactory() {
         playerFactory = PlayerFactory.getInstance();
         botFactory = BotFactory.getInstance();
+        bulletFactory = BulletFactory.getInstance();
     }
 
     public static EntityFactory getInstance() {
@@ -28,4 +30,8 @@ public class EntityFactory {
     public Entity createZombie(float x, float y) {
         return botFactory.createZombie(x, y);
     }
+
+    public Entity createBullet(float x, float y, float dirX, float dirY) { return bulletFactory.createBullet(x, y, dirX, dirY ); }
+
+
 }

@@ -59,8 +59,8 @@ public class RenderSystem extends IteratingSystem {
                     originY,
                     width,
                     height,
-                    1,
-                    1,
+                    spriteComponent.scaleX,
+                    spriteComponent.scaleY,
                     directionComponent.direction.angleDeg());
         }
 

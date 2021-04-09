@@ -7,7 +7,6 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
-// Skal kun være for å faktisk oppdatere posisjon, skal også bry seg om collision etter hvert.
 public class MovementSystem extends IteratingSystem {
     private ComponentMapper<PositionComponent> positionMapper;
     private ComponentMapper<VelocityComponent> velocityMapper;

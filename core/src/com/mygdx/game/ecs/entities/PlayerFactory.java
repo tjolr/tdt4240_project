@@ -8,6 +8,7 @@ import com.mygdx.game.ecs.components.DirectionComponent;
 import com.mygdx.game.ecs.components.HealthComponent;
 import com.mygdx.game.ecs.components.PlayerComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
+import com.mygdx.game.ecs.components.ShootingComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
@@ -33,6 +34,7 @@ public class PlayerFactory {
         PlayerComponent playerComponent = GameEngine.getInstance().createComponent(PlayerComponent.class);
         DirectionComponent direction = GameEngine.getInstance().createComponent(DirectionComponent.class);
         HealthComponent health = GameEngine.getInstance().createComponent(HealthComponent.class);
+        ShootingComponent shooting = GameEngine.getInstance().createComponent(ShootingComponent.class);
 
         Texture playerSprite = new Texture("sprites/player.png");
         sprite.textureRegion = new TextureRegion(playerSprite);
@@ -51,6 +53,7 @@ public class PlayerFactory {
         player.add(playerComponent);
         player.add(direction);
         player.add(health);
+        player.add(shooting);
 
         return player;
     }
