@@ -1,5 +1,6 @@
 package com.mygdx.game.firebase;
 
+import com.mygdx.game.game_state.GameStateController;
 import com.mygdx.game.items.SimpleGameModel;
 import com.mygdx.game.screens.game_setup.GameSetupController;
 
@@ -9,9 +10,11 @@ public class FirebaseController implements FirebaseInterface {
     private static FirebaseController firebaseControllerInstance = null;
     private FirebaseInterface firebaseInterface;
     private GameSetupController gameSetupController;
+    private GameStateController gameStateController;
 
     private FirebaseController() {
         gameSetupController = GameSetupController.getInstance();
+        gameStateController = GameStateController.GameStateController();
     }
 
     public static FirebaseController getInstance() {
@@ -40,8 +43,27 @@ public class FirebaseController implements FirebaseInterface {
         firebaseInterface.listenToAvailableGames();
     }
 
+    @Override
+    public void stopListenToAvailableGames() {
+        firebaseInterface.stopListenToAvailableGames();
+    }
+
+    @Override
+    public void listenToPlayersInGame(String gameId) {
+        firebaseInterface.listenToPlayersInGame(gameId);
+    }
+
+    @Override
+    public void stopListenToPlayersInGame() {
+
+    }
+
 
     public void setAvailableGames(ArrayList<SimpleGameModel> availableGames) {
         gameSetupController.addAvailableGame(availableGames);
+    }
+
+    public void addPlayer(String player) {
+        gameStateController.addPlayer(player);
     }
 }

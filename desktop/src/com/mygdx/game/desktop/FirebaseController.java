@@ -18,4 +18,9 @@ public class FirebaseController implements FirebaseInterface {
     public void listenToAvailableGames() {
 
     }
+
+    @Override
+    public void stopListenToAvailableGames() {
+
+    }
 }

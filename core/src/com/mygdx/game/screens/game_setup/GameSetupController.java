@@ -57,6 +57,9 @@ public class GameSetupController {
         firebaseController.writeToDb("game." + gameId, gameModel);
         firebaseController.appendToArrayInDb("game."+gameId+".playerUpdateModels", hostPlayerUpdateModel);
         firebaseController.appendToArrayInDb("game."+gameId+".players", gameStateModel.getHost());
+
+        firebaseController.stopListenToAvailableGames();
+        firebaseController.listenToPlayersInGame(gameId);
     }
 
     public void listenToAvailableGames() {
@@ -73,6 +76,9 @@ public class GameSetupController {
 
         firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".playerUpdateModels", playerUpdateModel);
         firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".players", gameStateModel.getUsername());
+
+        firebaseController.stopListenToAvailableGames();
+        firebaseController.listenToPlayersInGame(simpleGameModel.gameId);
     }
 
 }

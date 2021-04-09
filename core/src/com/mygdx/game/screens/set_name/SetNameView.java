@@ -38,11 +38,13 @@ public class SetNameView implements Screen {
         Table rootTable = new Table();
         rootTable.setFillParent(true);
         stage.addActor(rootTable);
+
         Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
         skin.getFont("font").getData().setScale(5f);
 
         final TextField usernameField = new TextField("Name", skin);
         usernameField.setMaxLength(12);
+
         TextButton submitButton = new TextButton("Submit", skin);
 
 

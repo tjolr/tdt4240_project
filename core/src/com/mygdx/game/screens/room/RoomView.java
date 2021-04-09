@@ -14,10 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.game_state.GameStateController;
 import com.mygdx.game.game_state.GameStateModel;
+import com.mygdx.game.items.SimpleGameModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class RoomView implements Screen {
     private NavigatorController navigatorController;
@@ -27,6 +29,11 @@ public class RoomView implements Screen {
     private GameStateModel gameStateModel;
     private GameStateController gameStateController;
 
+
+    private Skin skin;
+    private Table playersTable;
+
+    private Iterator<String> iter;
     private Stage stage;
 
     public RoomView(NavigatorController navigatorController,
@@ -50,10 +57,10 @@ public class RoomView implements Screen {
         rootTable.setFillParent(true);
         stage.addActor(rootTable);
 
-        Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
+        skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
         skin.getFont("font").getData().setScale(5f);
 
-        Table playersTable = new Table();
+        playersTable = new Table();
         ScrollPane scrollPane = new ScrollPane(playersTable, skin);
         rootTable.add(scrollPane).size(1000,500);
 
@@ -66,15 +73,6 @@ public class RoomView implements Screen {
         titleLabel.setFontScale(6f);
         playersTable.add(titleLabel);
         playersTable.row().padTop(50);
-        Label hostLabel = new Label(gameStateModel.getHost() + " (host)", skin);
-        playersTable.add(hostLabel);
-        playersTable.row();
-
-        for (String player: mockPlayers) {
-            Label playerLabel = new Label(player, skin);
-            playersTable.add(playerLabel);
-            playersTable.row();
-        }
 
         if (gameStateModel.getHost() != null && gameStateModel.getHost().equals(gameStateModel.getUsername())){
             TextButton startGameButton = new TextButton("START GAME", skin);
@@ -98,6 +96,20 @@ public class RoomView implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        iter = this.gameStateModel.getPlayers().iterator();
+
+        while(iter.hasNext()) {
+            String player = iter.next();
+            String playerText = player;
+            if (player.equals(gameStateModel.getHost())) {
+                playerText = playerText.concat(" (host)");
+            }
+            Label playerLabel = new Label(playerText, skin);
+            playersTable.add(playerLabel);
+            playersTable.row();
+            iter.remove();
+        }
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
