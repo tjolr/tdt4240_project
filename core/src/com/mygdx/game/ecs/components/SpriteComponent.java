@@ -5,4 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SpriteComponent implements Component {
     public TextureRegion textureRegion = null;
+    public float scaleX = 1;
+    public float scaleY = 1;
 }

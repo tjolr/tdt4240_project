@@ -10,8 +10,9 @@ import com.mygdx.game.ecs.components.PlayerComponent;
 
 public class PlayerDirectionSystem extends IteratingSystem {
     // Static variables updated from the touchpad changeListener
-    private static float directionJoystickX;
-    private static float directionJoystickY;
+    private static float directionX;
+    private static float directionY;
+    private static boolean isTouched;
 
     private ComponentMapper<DirectionComponent> directionMapper;
 
@@ -23,13 +24,26 @@ public class PlayerDirectionSystem extends IteratingSystem {
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        if (directionJoystickX == 0 && directionJoystickY == 0)
+        if (directionX == 0 && directionY == 0)
             return;
-        directionMapper.get(entity).direction.set(directionJoystickX, directionJoystickY);
+        directionMapper.get(entity).direction.set(directionX, directionY);
+        ShootingSystem.setFire(isTouched);
     }
 
     public static void setDirectionJoystick(float x, float y) {
-        PlayerDirectionSystem.directionJoystickX = x;
-        PlayerDirectionSystem.directionJoystickY = y;
+        setDirection(x, y);
+        if (x != 0 || y != 0) {
+            isTouched = true;
+        }
+    }
+
+    public static void setDirectionWithoutShooting(float x, float y) {
+        setDirection(x, y);
+        isTouched = false;
+    }
+
+    public static void setDirection(float x, float y) {
+        PlayerDirectionSystem.directionX = x;
+        PlayerDirectionSystem.directionY = y;
     }
 }

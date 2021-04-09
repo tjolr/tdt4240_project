@@ -15,6 +15,8 @@ import com.mygdx.game.ecs.systems.PlayerControlSystem;
 import com.mygdx.game.ecs.systems.PlayerDirectionSystem;
 import com.mygdx.game.ecs.systems.RenderSystem;
 import com.mygdx.game.ecs.systems.BotControlSystem;
+import com.mygdx.game.ecs.systems.ShootingSystem;
+import com.mygdx.game.ecs.systems.BulletSystem;
 
 public class GameEngine extends PooledEngine {
     // GameEngine is a Singleton class
@@ -45,6 +47,8 @@ public class GameEngine extends PooledEngine {
         gameEngineInstance.addSystem(new PlayerControlSystem());
         gameEngineInstance.addSystem(new PlayerDirectionSystem());
         gameEngineInstance.addSystem(new MovementSystem());
+        gameEngineInstance.addSystem(new ShootingSystem());
+        gameEngineInstance.addSystem(new BulletSystem());
         gameEngineInstance.addSystem(new BotControlSystem());
         gameEngineInstance.addSystem(new HealthRenderSystem());
     }
