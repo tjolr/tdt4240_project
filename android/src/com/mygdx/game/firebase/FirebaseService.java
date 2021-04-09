@@ -1,7 +1,9 @@
 package com.mygdx.game.firebase;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,9 +14,16 @@ import com.mygdx.game.items.SimpleGameModel;
 import java.util.ArrayList;
 
 public class FirebaseService implements FirebaseInterface {
+
     FirebaseDatabase db;
     DatabaseReference ref;
     FirebaseController firebaseController;
+
+    ValueEventListener availableGamesListener;
+    DatabaseReference availableGamesRef;
+    ChildEventListener playersInGameListener;
+    DatabaseReference playersInGameRef;
+    String gameId;
 
     public FirebaseService() {
         this.db = FirebaseDatabase.getInstance("https://progark-game-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -48,9 +57,9 @@ public class FirebaseService implements FirebaseInterface {
 
     @Override
     public void listenToAvailableGames() {
-        ref = db.getReference();
-        ref.child("game").addValueEventListener(new ValueEventListener() {
+        availableGamesRef = db.getReference().child("game");
 
+        availableGamesListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 ArrayList<SimpleGameModel> availableGames = new ArrayList<>();
@@ -68,10 +77,55 @@ public class FirebaseService implements FirebaseInterface {
             public void onCancelled(@NonNull DatabaseError error) {
                 System.out.println(error);
             }
-        });
+        };
+        availableGamesRef.addValueEventListener(availableGamesListener);
     }
 
+    @Override
+    public void stopListenToAvailableGames() {
+        availableGamesRef.removeEventListener(availableGamesListener);
+    }
 
+    @Override
+    public void listenToPlayersInGame(String gameId) {
+        this.gameId = gameId;
+        playersInGameRef = db.getReference().child("game").child(gameId).child("players");
+
+        playersInGameListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                String player = snapshot.getValue(String.class);
+                firebaseController.addPlayer(player);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        playersInGameRef.addChildEventListener(playersInGameListener);
+    }
+
+    @Override
+    public void stopListenToPlayersInGame() {
+
+    }
 
 
 }
