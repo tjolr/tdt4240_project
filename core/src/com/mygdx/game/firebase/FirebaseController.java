@@ -1,6 +1,6 @@
 package com.mygdx.game.firebase;
 
-import com.mygdx.game.game_state.GameStateController;
+import com.mygdx.game.game_state.GlobalStateController;
 import com.mygdx.game.items.SimpleGameModel;
 import com.mygdx.game.screens.game_setup.GameSetupController;
 
@@ -10,11 +10,11 @@ public class FirebaseController implements FirebaseInterface {
     private static FirebaseController firebaseControllerInstance = null;
     private FirebaseInterface firebaseInterface;
     private GameSetupController gameSetupController;
-    private GameStateController gameStateController;
+    private GlobalStateController globalStateController;
 
     private FirebaseController() {
         gameSetupController = GameSetupController.getInstance();
-        gameStateController = GameStateController.GameStateController();
+        globalStateController = GlobalStateController.getInstance();
     }
 
     public static FirebaseController getInstance() {
@@ -55,15 +55,28 @@ public class FirebaseController implements FirebaseInterface {
 
     @Override
     public void stopListenToPlayersInGame() {
-
+        firebaseInterface.stopListenToPlayersInGame();
     }
 
+    @Override
+    public void listenToGameStateInGame(String gameId) {
+        firebaseInterface.listenToGameStateInGame(gameId);
+    }
+
+    @Override
+    public void stopListenToGameStateInGame() {
+        firebaseInterface.stopListenToGameStateInGame();
+    }
+
+    public void setGameStateInGame(SimpleGameModel.GameState gameState) {
+        globalStateController.setGameState(gameState);
+    }
 
     public void setAvailableGames(ArrayList<SimpleGameModel> availableGames) {
         gameSetupController.addAvailableGame(availableGames);
     }
 
     public void addPlayer(String player) {
-        gameStateController.addPlayer(player);
+        globalStateController.addPlayer(player);
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.firebase.FirebaseController;
 import com.mygdx.game.firebase.FirebaseInterface;
+import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
 public class MyGdxGame extends Game {
@@ -13,13 +14,14 @@ public class MyGdxGame extends Game {
 	private FirebaseController firebaseController;
 
 	public MyGdxGame(FirebaseInterface firebaseInterface) {
+		this.navigatorController = NavigatorController.getInstance();
 		this.firebaseInterface = firebaseInterface;
 		this.firebaseController = FirebaseController.getInstance();
 	}
 
 	@Override
 	public void create () {
-		this.navigatorController = new NavigatorController();
+		this.navigatorController.changeScreen(NavigationModel.NavigationScreen.MAINMENU);
 		firebaseController.setFirebaseInterface(firebaseInterface);
 	}
 

@@ -12,9 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.game_state.GameStateController;
-import com.mygdx.game.game_state.GameStateModel;
-import com.mygdx.game.items.SimpleGameModel;
+import com.mygdx.game.game_state.GlobalStateController;
+import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
@@ -26,8 +25,8 @@ public class RoomView implements Screen {
     private RoomController roomController;
     private RoomModel roomModel;
 
-    private GameStateModel gameStateModel;
-    private GameStateController gameStateController;
+    private GlobalStateModel globalStateModel;
+    private GlobalStateController globalStateController;
 
 
     private Skin skin;
@@ -36,16 +35,18 @@ public class RoomView implements Screen {
     private Iterator<String> iter;
     private Stage stage;
 
-    public RoomView(NavigatorController navigatorController,
-                    RoomController roomController,
-                    RoomModel roomModel
+    public RoomView(
+        NavigatorController navigatorController,
+        RoomController roomController,
+        RoomModel roomModel
     ) {
         this.navigatorController = navigatorController;
         this.roomController = roomController;
         this.roomModel = roomModel;
 
-        this.gameStateController = GameStateController.GameStateController();
-        this.gameStateModel = GameStateModel.GameStateModel();
+        this.globalStateController = GlobalStateController.getInstance();
+        this.globalStateModel = GlobalStateModel.getInstance();
+
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -74,14 +75,15 @@ public class RoomView implements Screen {
         playersTable.add(titleLabel);
         playersTable.row().padTop(50);
 
-        if (gameStateModel.getHost() != null && gameStateModel.getHost().equals(gameStateModel.getUsername())){
+        if (globalStateModel.getHost() != null && globalStateModel.getHost().equals(globalStateModel.getUsername())){
             TextButton startGameButton = new TextButton("START GAME", skin);
             rootTable.add(startGameButton).uniformX();
 
             startGameButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                    navigatorController.changeScreen(NavigationModel.NavigationScreen.GAME);
+                navigatorController.changeScreen(NavigationModel.NavigationScreen.GAME);
+                roomController.setGameStateActive();
                 }
             });
         } else {
@@ -97,12 +99,12 @@ public class RoomView implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        iter = this.gameStateModel.getPlayers().iterator();
+        iter = this.globalStateModel.getPlayers().iterator();
 
         while(iter.hasNext()) {
             String player = iter.next();
             String playerText = player;
-            if (player.equals(gameStateModel.getHost())) {
+            if (player.equals(globalStateModel.getHost())) {
                 playerText = playerText.concat(" (host)");
             }
             Label playerLabel = new Label(playerText, skin);
@@ -110,6 +112,8 @@ public class RoomView implements Screen {
             playersTable.row();
             iter.remove();
         }
+
+
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -138,6 +142,7 @@ public class RoomView implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        skin.dispose();
     }
 }

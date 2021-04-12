@@ -19,11 +19,17 @@ public class FirebaseService implements FirebaseInterface {
     DatabaseReference ref;
     FirebaseController firebaseController;
 
+    String gameId;
+
     ValueEventListener availableGamesListener;
     DatabaseReference availableGamesRef;
+
     ChildEventListener playersInGameListener;
     DatabaseReference playersInGameRef;
-    String gameId;
+
+    ValueEventListener gameStateInGameListener;
+    DatabaseReference gameStateInGameRef;
+
 
     public FirebaseService() {
         this.db = FirebaseDatabase.getInstance("https://progark-game-default-rtdb.europe-west1.firebasedatabase.app/");
@@ -124,7 +130,32 @@ public class FirebaseService implements FirebaseInterface {
 
     @Override
     public void stopListenToPlayersInGame() {
+        playersInGameRef.removeEventListener(playersInGameListener);
+    }
 
+    @Override
+    public void listenToGameStateInGame(String gameId) {
+        this.gameId = gameId;
+        gameStateInGameRef = db.getReference().child("game").child(gameId).child("gameState");
+
+        gameStateInGameListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                firebaseController.setGameStateInGame(snapshot.getValue(SimpleGameModel.GameState.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        gameStateInGameRef.addValueEventListener(gameStateInGameListener);
+
+    }
+
+    @Override
+    public void stopListenToGameStateInGame() {
+        gameStateInGameRef.removeEventListener(gameStateInGameListener);
     }
 
 

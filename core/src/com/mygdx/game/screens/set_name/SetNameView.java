@@ -11,23 +11,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.game_state.GameStateController;
-import com.mygdx.game.game_state.GameStateModel;
-import com.mygdx.game.screens.game_setup.GameSetupController;
-import com.mygdx.game.screens.game_setup.GameSetupModel;
+import com.mygdx.game.game_state.GlobalStateController;
+import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigatorController;
 
 public class SetNameView implements Screen {
     private NavigatorController navigatorController;
-    private GameStateController gameStateController;
-    private GameStateModel gameStateModel;
+    private GlobalStateController globalStateController;
+    private GlobalStateModel globalStateModel;
     private Stage stage;
 
-    public SetNameView(NavigatorController navigatorController
-    ){
+    public SetNameView(NavigatorController navigatorController){
         this.navigatorController = navigatorController;
-        this.gameStateController = GameStateController.GameStateController();
+        this.globalStateController = GlobalStateController.getInstance();
 
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -55,7 +52,7 @@ public class SetNameView implements Screen {
         submitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                gameStateController.setUsername(usernameField.getText());
+                globalStateController.setUsername(usernameField.getText());
                 navigatorController.changeScreen(NavigationModel.NavigationScreen.GAMESETUP);
             }
         });
