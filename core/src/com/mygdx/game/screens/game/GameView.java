@@ -74,6 +74,7 @@ public class GameView implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         GameEngine.getInstance().update(delta);
         stage.draw();

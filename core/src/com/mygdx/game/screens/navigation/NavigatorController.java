@@ -1,6 +1,6 @@
 package com.mygdx.game.screens.navigation;
 
-import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.firebase.FirebaseController;
@@ -16,47 +16,54 @@ import com.mygdx.game.screens.set_name.SetNameView;
 import com.mygdx.game.screens.settings.SettingsView;
 
 public class NavigatorController implements Disposable {
+    private static NavigatorController navigatorControllerInstance = null;
 
     private Screen screen;
-    private FirebaseController firebaseController;
 
-    public NavigatorController() {
-        this.changeScreen(NavigationModel.NavigationScreen.MAINMENU);
-        firebaseController = FirebaseController.getInstance();
+    private NavigatorController() {}
+
+    public static NavigatorController getInstance() {
+        if (navigatorControllerInstance == null) {
+            navigatorControllerInstance = new NavigatorController();
+        }
+        return navigatorControllerInstance;
     }
 
     public void changeScreen(NavigationModel.NavigationScreen screen) {
-        switch(screen) {
-            case MAINMENU:
-                MainMenuView mainMenuView = new MainMenuView(this);
-                this.setScreen(mainMenuView);
-                break;
-            case SET_NAME:
-                SetNameView setNameView = new SetNameView(this);
-                this.setScreen(setNameView);
-                break;
-            case GAMESETUP:
-                GameSetupModel gameSetupModel = GameSetupModel.getInstance();
-                GameSetupController gameSetupController = GameSetupController.getInstance();
-                gameSetupController.setFirebaseController(firebaseController);
-                GameSetupView gameSetupView = new GameSetupView(this, gameSetupController, gameSetupModel);
-                this.setScreen(gameSetupView);
-                break;
-            case ROOM:
-                RoomModel roomModel = new RoomModel();
-                RoomController roomController = new RoomController(roomModel);
-                RoomView roomView = new RoomView(this, roomController, roomModel);
-                this.setScreen(roomView);
-                break;
-            case SETTINGS:
-                SettingsView settingsView = new SettingsView(this);
-                this.setScreen(settingsView);
-                break;
-            case GAME:
-                GameView gameView = new GameView(this);
-                this.setScreen(gameView);
-                break;
-        }
+        // Make sure that it runs on main thread which is initialized with OpenGL ES
+        Gdx.app.postRunnable(()-> {
+            switch(screen) {
+                case MAINMENU:
+                    MainMenuView mainMenuView = new MainMenuView(this);
+                    this.setScreen(mainMenuView);
+                    break;
+                case SET_NAME:
+                    SetNameView setNameView = new SetNameView(this);
+                    this.setScreen(setNameView);
+                    break;
+                case GAMESETUP:
+                    GameSetupModel gameSetupModel = GameSetupModel.getInstance();
+                    GameSetupController gameSetupController = GameSetupController.getInstance();
+                    gameSetupController.initGameSetupController();
+                    GameSetupView gameSetupView = new GameSetupView(this,gameSetupController, gameSetupModel);
+                    this.setScreen(gameSetupView);
+                    break;
+                case ROOM:
+                    RoomModel roomModel = new RoomModel();
+                    RoomController roomController = new RoomController(roomModel);
+                    RoomView roomView = new RoomView(this, roomController, roomModel);
+                    this.setScreen(roomView);
+                    break;
+                case SETTINGS:
+                    SettingsView settingsView = new SettingsView(this);
+                    this.setScreen(settingsView);
+                    break;
+                case GAME:
+                    GameView gameView = new GameView(this);
+                    this.setScreen(gameView);
+                    break;
+            }
+        });
     }
 
 

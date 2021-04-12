@@ -1,7 +1,5 @@
 package com.mygdx.game.network;
 
-import com.mygdx.game.game_state.GameStateController;
-
 public class NetworkConnectionController implements PlayServicesListener {
     private PlayServices playServices;
 

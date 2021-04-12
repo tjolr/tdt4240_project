@@ -7,4 +7,6 @@ public interface FirebaseInterface {
     public void stopListenToAvailableGames();
     public void listenToPlayersInGame(String gameId);
     public void stopListenToPlayersInGame();
+    public void listenToGameStateInGame(String gameId);
+    public void stopListenToGameStateInGame();
 }
