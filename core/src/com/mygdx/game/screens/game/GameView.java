@@ -18,9 +18,11 @@ import com.mygdx.game.screens.navigation.NavigatorController;
 public class GameView implements Screen {
     private Stage stage;
     private NavigatorController navigatorController;
+    private GameController gameController;
 
-    public GameView(NavigatorController navigatorController) {
+    public GameView(NavigatorController navigatorController, GameController gameController) {
         this.navigatorController = navigatorController;
+        this.gameController = gameController;
         stage = new Stage(new ScreenViewport());
 
         initializeTouchpad(stage);
@@ -70,7 +72,6 @@ public class GameView implements Screen {
 
     @Override
     public void show() {
-
     }
 
     @Override

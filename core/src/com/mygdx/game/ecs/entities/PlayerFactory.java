@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.components.DirectionComponent;
+import com.mygdx.game.ecs.components.ExternalPlayerComponent;
 import com.mygdx.game.ecs.components.HealthComponent;
 import com.mygdx.game.ecs.components.PlayerComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
@@ -16,7 +17,10 @@ public class PlayerFactory {
     // PlayerFactory is a Singleton class
     private static PlayerFactory playerFactoryInstance = null;
 
-    private PlayerFactory() {}
+
+    private PlayerFactory() {
+
+    }
 
     public static PlayerFactory getInstance() {
         if (playerFactoryInstance == null)
@@ -25,7 +29,7 @@ public class PlayerFactory {
         return playerFactoryInstance;
     }
 
-    Entity createPlayer(float x, float y) {
+    Entity createPlayer(String playerName, float x, float y) {
         Entity player = GameEngine.getInstance().createEntity();
 
         PositionComponent position = GameEngine.getInstance().createComponent(PositionComponent.class);
@@ -38,6 +42,8 @@ public class PlayerFactory {
 
         Texture playerSprite = new Texture("sprites/player.png");
         sprite.textureRegion = new TextureRegion(playerSprite);
+
+        playerComponent.playerName = playerName;
 
         position.position.x = x;
         position.position.y = y;
@@ -57,4 +63,23 @@ public class PlayerFactory {
 
         return player;
     }
+
+    Entity createExternalPlayer(String playerName, float health, int index) {
+        GameEngine gameEngine = GameEngine.getInstance();
+        Entity playerEntity = gameEngine.createEntity();
+
+        ExternalPlayerComponent extPlayerComponent = gameEngine.createComponent(ExternalPlayerComponent.class);
+        HealthComponent healthComponent = gameEngine.createComponent(HealthComponent.class);
+
+        extPlayerComponent.playerName = playerName;
+        extPlayerComponent.index = index;
+
+        healthComponent.health = health;
+        healthComponent.maxHealth = 100f;
+
+        playerEntity.add(extPlayerComponent);
+        playerEntity.add(healthComponent);
+
+        return playerEntity;
+    };
 }

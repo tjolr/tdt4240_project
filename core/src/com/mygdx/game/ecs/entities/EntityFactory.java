@@ -23,8 +23,11 @@ public class EntityFactory {
         return entityFactoryInstance;
     }
 
-    public Entity createPlayer(float x, float y) {
-        return playerFactory.createPlayer(x, y);
+    public Entity createPlayer(String playerName, float x, float y) {
+        return playerFactory.createPlayer(playerName, x, y);
+    }
+    public Entity createExternalPlayer(String playerName, float health, int index) {
+        return playerFactory.createExternalPlayer(playerName, health, index);
     }
 
     public Entity createZombie(float x, float y) {

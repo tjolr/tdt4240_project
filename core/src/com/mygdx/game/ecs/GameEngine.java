@@ -19,17 +19,23 @@ import com.mygdx.game.ecs.systems.RenderSystem;
 import com.mygdx.game.ecs.systems.BotControlSystem;
 import com.mygdx.game.ecs.systems.ShootingSystem;
 import com.mygdx.game.ecs.systems.BulletSystem;
+import com.mygdx.game.game_state.GlobalStateModel;
+import com.mygdx.game.items.PlayerUpdateModel;
+import java.util.Map;
+
 
 public class GameEngine extends PooledEngine {
     // GameEngine is a Singleton class
     private static GameEngine gameEngineInstance = null;
 
     private final EntityFactory entityFactory;
+    private static GlobalStateModel globalStateModel;
 
     private Entity player;
 
     private GameEngine() {
         entityFactory = EntityFactory.getInstance();
+        globalStateModel = GlobalStateModel.getInstance();
     }
 
     public static GameEngine getInstance() {
@@ -41,8 +47,10 @@ public class GameEngine extends PooledEngine {
 
     public void initializeEngine() {
         createBackground();
+        addPlayerUpdateModels();
         addBotSpawner();
-        player = entityFactory.createPlayer(200, 200);
+
+        player = entityFactory.createPlayer(globalStateModel.getUsername(),200, 200);
 
         gameEngineInstance.addEntity(player);
 
@@ -77,6 +85,7 @@ public class GameEngine extends PooledEngine {
         gameEngineInstance.addEntity(background);
     }
 
+
     private void addBotSpawner() {
         Entity spawner = gameEngineInstance.createEntity();
 
@@ -89,5 +98,19 @@ public class GameEngine extends PooledEngine {
 
     public Entity getPlayer() {
         return player;
+    }
+
+    private void addPlayerUpdateModels() {
+        // Add entities with external player models that are fetched from the database and saved in GlobalStateModel
+        int index = 0;
+        for (Map.Entry<String, PlayerUpdateModel> playerUpdateModelEntry : globalStateModel.getPlayerUpdateModels().entrySet()) {
+            PlayerUpdateModel playerUpdateModel = playerUpdateModelEntry.getValue();
+
+            Entity externalPlayer = entityFactory.createExternalPlayer(playerUpdateModel.player, playerUpdateModel.health, index);
+            gameEngineInstance.addEntity(externalPlayer);
+
+            index++;
+        }
+
     }
 }
