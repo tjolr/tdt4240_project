@@ -5,10 +5,12 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.ecs.components.BotSpawnComponent;
 import com.mygdx.game.ecs.components.DirectionComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
 import com.mygdx.game.ecs.entities.EntityFactory;
+import com.mygdx.game.ecs.systems.BotSpawnSystem;
 import com.mygdx.game.ecs.systems.HealthRenderSystem;
 import com.mygdx.game.ecs.systems.MovementSystem;
 import com.mygdx.game.ecs.systems.PlayerControlSystem;
@@ -37,11 +39,10 @@ public class GameEngine extends PooledEngine {
 
     public void initializeEngine() {
         createBackground();
+        addBotSpawner();
         Entity player = entityFactory.createPlayer(200, 200);
-        Entity zombie = entityFactory.createZombie(600, 600);
 
         gameEngineInstance.addEntity(player);
-        gameEngineInstance.addEntity(zombie);
 
         gameEngineInstance.addSystem(new RenderSystem());
         gameEngineInstance.addSystem(new PlayerControlSystem());
@@ -51,6 +52,7 @@ public class GameEngine extends PooledEngine {
         gameEngineInstance.addSystem(new BulletSystem());
         gameEngineInstance.addSystem(new BotControlSystem());
         gameEngineInstance.addSystem(new HealthRenderSystem());
+        gameEngineInstance.addSystem(new BotSpawnSystem());
     }
 
     private void createBackground() {
@@ -71,5 +73,15 @@ public class GameEngine extends PooledEngine {
         background.add(direction);
 
         gameEngineInstance.addEntity(background);
+    }
+
+    private void addBotSpawner() {
+        Entity spawner = gameEngineInstance.createEntity();
+
+        BotSpawnComponent botSpawnComponent = gameEngineInstance.createComponent(BotSpawnComponent.class);
+
+        spawner.add(botSpawnComponent);
+
+        gameEngineInstance.addEntity(spawner);
     }
 }
