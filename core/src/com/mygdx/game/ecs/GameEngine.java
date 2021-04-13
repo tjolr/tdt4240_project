@@ -26,6 +26,8 @@ public class GameEngine extends PooledEngine {
 
     private final EntityFactory entityFactory;
 
+    private Entity player;
+
     private GameEngine() {
         entityFactory = EntityFactory.getInstance();
     }
@@ -40,7 +42,7 @@ public class GameEngine extends PooledEngine {
     public void initializeEngine() {
         createBackground();
         addBotSpawner();
-        Entity player = entityFactory.createPlayer(200, 200);
+        player = entityFactory.createPlayer(200, 200);
 
         gameEngineInstance.addEntity(player);
 
@@ -83,5 +85,9 @@ public class GameEngine extends PooledEngine {
         spawner.add(botSpawnComponent);
 
         gameEngineInstance.addEntity(spawner);
+    }
+
+    public Entity getPlayer() {
+        return player;
     }
 }
