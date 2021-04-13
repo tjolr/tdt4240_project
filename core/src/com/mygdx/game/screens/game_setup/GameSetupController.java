@@ -75,7 +75,9 @@ public class GameSetupController {
 
     public void playerJoinGame(SimpleGameModel simpleGameModel) {
         globalStateController.setHost(simpleGameModel.host);
-        PlayerUpdateModel playerUpdateModel = new PlayerUpdateModel(globalStateModel.getHost(), 100f, 0);
+        globalStateController.setGameId(simpleGameModel.gameId);
+
+        PlayerUpdateModel playerUpdateModel = new PlayerUpdateModel(globalStateModel.getUsername(), 100f, 0);
 
         firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".playerUpdateModels", playerUpdateModel);
         firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".players", globalStateModel.getUsername());

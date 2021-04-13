@@ -9,4 +9,6 @@ public interface FirebaseInterface {
     public void stopListenToPlayersInGame();
     public void listenToGameStateInGame(String gameId);
     public void stopListenToGameStateInGame();
+    public void listenToPlayerUpdateModelsInGame(String gameId);
+    public void stopListenToPlayerUpdateModelsInGame();
 }

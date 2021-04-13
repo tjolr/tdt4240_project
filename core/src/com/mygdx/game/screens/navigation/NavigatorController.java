@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.firebase.FirebaseController;
+import com.mygdx.game.screens.game.GameController;
 import com.mygdx.game.screens.game.GameView;
 import com.mygdx.game.screens.game_setup.GameSetupController;
 import com.mygdx.game.screens.game_setup.GameSetupModel;
@@ -59,7 +60,8 @@ public class NavigatorController implements Disposable {
                     this.setScreen(settingsView);
                     break;
                 case GAME:
-                    GameView gameView = new GameView(this);
+                    GameController gameController = GameController.getInstance();
+                    GameView gameView = new GameView(this, gameController);
                     this.setScreen(gameView);
                     break;
             }

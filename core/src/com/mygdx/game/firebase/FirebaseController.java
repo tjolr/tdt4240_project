@@ -1,6 +1,7 @@
 package com.mygdx.game.firebase;
 
 import com.mygdx.game.game_state.GlobalStateController;
+import com.mygdx.game.items.PlayerUpdateModel;
 import com.mygdx.game.items.SimpleGameModel;
 import com.mygdx.game.screens.game_setup.GameSetupController;
 
@@ -68,6 +69,16 @@ public class FirebaseController implements FirebaseInterface {
         firebaseInterface.stopListenToGameStateInGame();
     }
 
+    @Override
+    public void listenToPlayerUpdateModelsInGame(String gameId) {
+        firebaseInterface.listenToPlayerUpdateModelsInGame(gameId);
+    }
+
+    @Override
+    public void stopListenToPlayerUpdateModelsInGame() {
+        firebaseInterface.stopListenToPlayerUpdateModelsInGame();
+    }
+
     public void setGameStateInGame(SimpleGameModel.GameState gameState) {
         globalStateController.setGameState(gameState);
     }
@@ -78,5 +89,9 @@ public class FirebaseController implements FirebaseInterface {
 
     public void addPlayer(String player) {
         globalStateController.addPlayer(player);
+    }
+
+    public void setPlayerUpdateModel(PlayerUpdateModel playerUpdateModel) {
+        globalStateController.setPlayerUpdateModel(playerUpdateModel);
     }
 }
