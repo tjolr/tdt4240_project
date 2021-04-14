@@ -11,6 +11,8 @@ import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
 import com.mygdx.game.ecs.entities.EntityFactory;
 import com.mygdx.game.ecs.systems.BotSpawnSystem;
+import com.mygdx.game.ecs.systems.BoundSystem;
+import com.mygdx.game.ecs.systems.CollisionSystem;
 import com.mygdx.game.ecs.systems.HealthRenderSystem;
 import com.mygdx.game.ecs.systems.MovementSystem;
 import com.mygdx.game.ecs.systems.PlayerControlSystem;
@@ -63,6 +65,8 @@ public class GameEngine extends PooledEngine {
         gameEngineInstance.addSystem(new BotControlSystem());
         gameEngineInstance.addSystem(new HealthRenderSystem());
         gameEngineInstance.addSystem(new BotSpawnSystem());
+        gameEngineInstance.addSystem(new BoundSystem());
+        gameEngineInstance.addSystem(new CollisionSystem());
     }
 
     private void createBackground() {

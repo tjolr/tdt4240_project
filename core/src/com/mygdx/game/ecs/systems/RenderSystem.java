@@ -46,10 +46,14 @@ public class RenderSystem extends IteratingSystem {
             PositionComponent positionComponent = positionMapper.get(entity);
             DirectionComponent directionComponent = directionMapper.get(entity);
 
-            float width = spriteComponent.textureRegion.getRegionWidth();
-            float height = spriteComponent.textureRegion.getRegionHeight();
+            float width = spriteComponent.textureRegion.getRegionWidth() * spriteComponent.scaleX;
+            float height = spriteComponent.textureRegion.getRegionHeight() * spriteComponent.scaleY;
             float originX = width * 0.5f;
             float originY = height * 0.5f;
+            if (spriteComponent.offset) {
+                originX -= 60;
+                originY += 50;
+            }
 
             spriteBatch.draw(
                     spriteComponent.textureRegion,
@@ -59,8 +63,8 @@ public class RenderSystem extends IteratingSystem {
                     originY,
                     width,
                     height,
-                    spriteComponent.scaleX,
-                    spriteComponent.scaleY,
+                    1,
+                    1,
                     directionComponent.direction.angleDeg());
         }
 

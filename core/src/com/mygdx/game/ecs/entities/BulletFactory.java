@@ -3,9 +3,11 @@ package com.mygdx.game.ecs.entities;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.components.BulletComponent;
+import com.mygdx.game.ecs.components.CollisionComponent;
 import com.mygdx.game.ecs.components.DirectionComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
@@ -32,27 +34,42 @@ public class BulletFactory {
         DirectionComponent direction = GameEngine.getInstance().createComponent(DirectionComponent.class);
         VelocityComponent velocity = GameEngine.getInstance().createComponent(VelocityComponent.class);
         BulletComponent bulletComp = GameEngine.getInstance().createComponent(BulletComponent.class);
+        CollisionComponent collision = GameEngine.getInstance().createComponent(CollisionComponent.class);
 
         Texture bulletSprite = new Texture("sprites/bullet.png");
         sprite.textureRegion = new TextureRegion(bulletSprite);
+        sprite.offset = true;
         sprite.scaleX = 0.1f;
         sprite.scaleY = 0.1f;
 
-        position.position.x = x - 253;
-        position.position.y = y - 216;
+        position.position.x = x+140;
+        position.position.y = y+20;
 
         direction.direction.set(dirX, dirY);
+
+        float left = 10;
+        float bot = 20;
+        float right = 70;
+        float top = 50;
+        sprite.polygon = new Polygon(new float[]{
+                left,bot,
+                left,top,
+                right,top,
+                right,bot});
+        sprite.polygon.setPosition(position.position.x,position.position.y);
+        sprite.polygon.setOrigin((left+right) * 0.5f-60, (bot+top) * 0.5f+50);
 
         velocity.speed = 100;
         velocity.velocity.set(direction.direction);
 
-        bulletComp.lifetime = 50;
+        bulletComp.lifetime = 1;
 
         bullet.add(position);
         bullet.add(sprite);
         bullet.add(direction);
         bullet.add(velocity);
         bullet.add(bulletComp);
+        bullet.add(collision);
 
         return bullet;
     }
