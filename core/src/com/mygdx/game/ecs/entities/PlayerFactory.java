@@ -2,8 +2,11 @@ package com.mygdx.game.ecs.entities;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Polygon;
 import com.mygdx.game.ecs.GameEngine;
+import com.mygdx.game.ecs.components.CollisionComponent;
 import com.mygdx.game.ecs.components.DirectionComponent;
 import com.mygdx.game.ecs.components.HealthComponent;
 import com.mygdx.game.ecs.components.PlayerComponent;
@@ -35,12 +38,30 @@ public class PlayerFactory {
         DirectionComponent direction = GameEngine.getInstance().createComponent(DirectionComponent.class);
         HealthComponent health = GameEngine.getInstance().createComponent(HealthComponent.class);
         ShootingComponent shooting = GameEngine.getInstance().createComponent(ShootingComponent.class);
+        CollisionComponent collision = GameEngine.getInstance().createComponent(CollisionComponent.class);
 
         Texture playerSprite = new Texture("sprites/player.png");
         sprite.textureRegion = new TextureRegion(playerSprite);
+        sprite.offset = false;
+        sprite.scaleX = 1f;
+        sprite.scaleY = 1f;
 
         position.position.x = x;
         position.position.y = y;
+
+
+        float left = 25;
+        float bot = 25;
+        float right = 225;
+        float top = 175;
+        sprite.polygon = new Polygon(new float[]{
+                left,bot,
+                left,top,
+                right,top,
+                right,bot});
+        sprite.polygon.setPosition(x,y);
+        sprite.polygon.setOrigin((left+right) * 0.5f, (bot+top) * 0.5f);
+        sprite.polygon.setRotation(direction.direction.angleDeg());
 
         velocity.speed = 500;
 
@@ -54,6 +75,7 @@ public class PlayerFactory {
         player.add(direction);
         player.add(health);
         player.add(shooting);
+        player.add(collision);
 
         return player;
     }

@@ -26,7 +26,8 @@ public class PlayerDirectionSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         if (directionX == 0 && directionY == 0)
             return;
-        directionMapper.get(entity).direction.set(directionX, directionY);
+        DirectionComponent direction = directionMapper.get(entity);
+        direction.direction.set(directionX, directionY);
         ShootingSystem.setFire(isTouched);
     }
 

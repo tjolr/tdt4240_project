@@ -24,8 +24,7 @@ public class BulletSystem extends IteratingSystem {
         BulletComponent bullet = bulletMapper.get(entity);
 
         if (bullet.lifetime <= 0) {
-            GameEngine gameEngineInstance = GameEngine.getInstance();
-            gameEngineInstance.removeEntity(entity);
+            GameEngine.getInstance().removeEntity(entity);
         }
         else {
             bullet.lifetime -= deltaTime;
