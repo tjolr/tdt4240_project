@@ -12,10 +12,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.ecs.components.BotComponent;
 import com.mygdx.game.ecs.components.ExternalPlayerComponent;
 import com.mygdx.game.ecs.components.HealthComponent;
-import com.mygdx.game.ecs.components.PlayerComponent;
 import com.mygdx.game.game_state.GlobalStateModel;
 
-public class HealthRenderSystem extends IteratingSystem {
+public class PlayerHealthScoreSystem extends IteratingSystem {
     private final ComponentMapper<HealthComponent> healthMapper;
     private final ComponentMapper<ExternalPlayerComponent> externalPlayerMapper;
 
@@ -35,7 +34,7 @@ public class HealthRenderSystem extends IteratingSystem {
     private GlobalStateModel globalStateModel;
     private int numberOfExternalPlayers;
 
-    public HealthRenderSystem() {
+    public PlayerHealthScoreSystem() {
         super(Family.all(HealthComponent.class).one(ExternalPlayerComponent.class).exclude(BotComponent.class).get());
 
         healthMapper = ComponentMapper.getFor(HealthComponent.class);
@@ -61,11 +60,12 @@ public class HealthRenderSystem extends IteratingSystem {
 
             // Updating healthComponent to use latest value from globalStateModel
             healthComponent.health = globalStateModel.getPlayerUpdateModels().get(externalPlayerComponent.playerName).health;
-            drawHealthBar(healthComponent, healthbarWidth, healthbarOriginX, originY, externalPlayerComponent.playerName);
+            externalPlayerComponent.score = globalStateModel.getPlayerUpdateModels().get(externalPlayerComponent.playerName).score;
+            drawNameHealthScore(healthComponent, healthbarWidth, healthbarOriginX, originY, externalPlayerComponent.playerName, externalPlayerComponent.score);
         }
     }
 
-    public void drawHealthBar(HealthComponent healthComponent, float maxHealthWidthAdjusted, float currOriginX, float currOriginY, String playerName) {
+    public void drawNameHealthScore(HealthComponent healthComponent, float maxHealthWidthAdjusted, float currOriginX, float currOriginY, String playerName, int playerScore) {
         // Calculate healthWidth to be shown, and maxHealthwidth
         float healthWidth = maxHealthWidthAdjusted * (healthComponent.health / healthComponent.maxHealth) - 2 * marginX;
         float maxHealthWidth = maxHealthWidthAdjusted - 2 * marginX;
@@ -92,11 +92,14 @@ public class HealthRenderSystem extends IteratingSystem {
         lineRenderer.rect(currOriginX, currOriginY, maxHealthWidth, healthBarHeight);
         lineRenderer.end();
 
-        // Write playername above healthbar
+        // Write playername and score above Health
         sb.begin();
-        font.getData().setScale(2);
+        font.getData().setScale(2.5f);
         font.setColor(Color.WHITE);
         font.draw(sb, playerName, currOriginX, currOriginY + 3 * healthBarHeight);
+
+        String score = String.valueOf(playerScore);
+        font.draw(sb, score , currOriginX + healthWidth - (25f * score.length()),currOriginY + 3 * healthBarHeight);
         sb.end();
     }
 }
