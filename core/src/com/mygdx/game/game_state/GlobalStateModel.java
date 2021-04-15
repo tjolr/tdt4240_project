@@ -19,10 +19,7 @@ public class GlobalStateModel {
     private String gameId;
 
     private GlobalStateModel() {
-        this.username = null;
-        this.players = new ArrayList<>();
-        this.playerUpdateModels = new HashMap<String, PlayerUpdateModel>();
-
+        this.clearGlobalStateModel();
     }
 
     // Singleton
@@ -32,6 +29,12 @@ public class GlobalStateModel {
             globalStateModelInstance = new GlobalStateModel();
         }
         return globalStateModelInstance;
+    }
+
+    public void clearGlobalStateModel(){
+        this.username = null;
+        this.players = new ArrayList<>();
+        this.playerUpdateModels = new HashMap<String, PlayerUpdateModel>();
     }
 
     public String getHost() {

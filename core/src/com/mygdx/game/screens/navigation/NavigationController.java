@@ -3,31 +3,32 @@ package com.mygdx.game.screens.navigation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
-import com.mygdx.game.firebase.FirebaseController;
 import com.mygdx.game.screens.game.GameController;
 import com.mygdx.game.screens.game.GameView;
 import com.mygdx.game.screens.game_setup.GameSetupController;
 import com.mygdx.game.screens.game_setup.GameSetupModel;
 import com.mygdx.game.screens.game_setup.GameSetupView;
 import com.mygdx.game.screens.main_menu.MainMenuView;
+import com.mygdx.game.screens.result.ResultController;
+import com.mygdx.game.screens.result.ResultView;
 import com.mygdx.game.screens.room.RoomController;
 import com.mygdx.game.screens.room.RoomModel;
 import com.mygdx.game.screens.room.RoomView;
 import com.mygdx.game.screens.set_name.SetNameView;
 import com.mygdx.game.screens.settings.SettingsView;
 
-public class NavigatorController implements Disposable {
-    private static NavigatorController navigatorControllerInstance = null;
+public class NavigationController implements Disposable {
+    private static NavigationController navigationControllerInstance = null;
 
     private Screen screen;
 
-    private NavigatorController() {}
+    private NavigationController() {}
 
-    public static NavigatorController getInstance() {
-        if (navigatorControllerInstance == null) {
-            navigatorControllerInstance = new NavigatorController();
+    public static NavigationController getInstance() {
+        if (navigationControllerInstance == null) {
+            navigationControllerInstance = new NavigationController();
         }
-        return navigatorControllerInstance;
+        return navigationControllerInstance;
     }
 
     public void changeScreen(NavigationModel.NavigationScreen screen) {
@@ -63,6 +64,11 @@ public class NavigatorController implements Disposable {
                     GameController gameController = GameController.getInstance();
                     GameView gameView = new GameView(this, gameController);
                     this.setScreen(gameView);
+                    break;
+                case RESULT:
+                    ResultController resultController = ResultController.getInstance();
+                    ResultView resultView = new ResultView(this, resultController);
+                    this.setScreen(resultView);
                     break;
             }
         });

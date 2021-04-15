@@ -23,4 +23,9 @@ public class RoomController {
         globalStateController.setGameState(SimpleGameModel.GameState.ACTIVE);
         firebaseController.writeToDb("game."+ globalStateModel.getGameId()+".gameState", SimpleGameModel.GameState.ACTIVE);
     }
+
+    public void disposeRoomListeners(){
+        firebaseController.stopListenToPlayersInGame();
+        firebaseController.stopListenToGameStateInGame();
+    }
 }
