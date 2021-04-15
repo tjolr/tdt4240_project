@@ -11,17 +11,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.screens.navigation.NavigationModel;
-import com.mygdx.game.screens.navigation.NavigatorController;
+import com.mygdx.game.screens.navigation.NavigationController;
 
 public class MainMenuView implements Screen {
 
     private static final String TEXT_PLAY = "PLAY NOW";
     private static final String TEXT_SETTINGS = "SETTINGS";
     private Stage stage;
-    private NavigatorController navigatorController;
+    private NavigationController navigationController;
 
-    public MainMenuView(NavigatorController navigatorController) {
-        this.navigatorController = navigatorController;
+    public MainMenuView(NavigationController navigationController) {
+        this.navigationController = navigationController;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
@@ -50,14 +50,14 @@ public class MainMenuView implements Screen {
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-            navigatorController.changeScreen(NavigationModel.NavigationScreen.SET_NAME);
+            navigationController.changeScreen(NavigationModel.NavigationScreen.SET_NAME);
             }
         });
 
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                navigatorController.changeScreen(NavigationModel.NavigationScreen.SETTINGS);
+                navigationController.changeScreen(NavigationModel.NavigationScreen.SETTINGS);
             }
         });
     }

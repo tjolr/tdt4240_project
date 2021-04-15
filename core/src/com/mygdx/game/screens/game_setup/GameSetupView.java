@@ -15,13 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.items.SimpleGameModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
-import com.mygdx.game.screens.navigation.NavigatorController;
+import com.mygdx.game.screens.navigation.NavigationController;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class GameSetupView implements Screen {
-    private NavigatorController navigatorController;
+    private NavigationController navigationController;
     private GameSetupController gameSetupController;
     private GameSetupModel gameSetupModel;
 
@@ -39,11 +39,11 @@ public class GameSetupView implements Screen {
 
 
     public GameSetupView(
-            NavigatorController navigatorController,
+            NavigationController navigationController,
             GameSetupController gameSetupController,
             GameSetupModel gameSetupModel
     ) {
-        this.navigatorController = navigatorController;
+        this.navigationController = navigationController;
         this.gameSetupController = gameSetupController;
         this.gameSetupModel = gameSetupModel;
 
@@ -77,14 +77,14 @@ public class GameSetupView implements Screen {
         startButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-            navigatorController.changeScreen(NavigationModel.NavigationScreen.GAME);
+            navigationController.changeScreen(NavigationModel.NavigationScreen.GAME);
             }
         });
         hostGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
             gameSetupController.hostCreateGame();
-            navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
+            navigationController.changeScreen(NavigationModel.NavigationScreen.ROOM);
             }
         });
 
@@ -143,7 +143,7 @@ public class GameSetupView implements Screen {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
                 gameSetupController.playerJoinGame(availableGame);
-                navigatorController.changeScreen(NavigationModel.NavigationScreen.ROOM);
+                navigationController.changeScreen(NavigationModel.NavigationScreen.ROOM);
                 }
             });
             iter.remove();

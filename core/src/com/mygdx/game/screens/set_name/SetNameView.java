@@ -14,16 +14,16 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.game_state.GlobalStateController;
 import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
-import com.mygdx.game.screens.navigation.NavigatorController;
+import com.mygdx.game.screens.navigation.NavigationController;
 
 public class SetNameView implements Screen {
-    private NavigatorController navigatorController;
+    private NavigationController navigationController;
     private GlobalStateController globalStateController;
     private GlobalStateModel globalStateModel;
     private Stage stage;
 
-    public SetNameView(NavigatorController navigatorController){
-        this.navigatorController = navigatorController;
+    public SetNameView(NavigationController navigationController){
+        this.navigationController = navigationController;
         this.globalStateController = GlobalStateController.getInstance();
 
         this.stage = new Stage(new ScreenViewport());
@@ -53,7 +53,7 @@ public class SetNameView implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 globalStateController.setUsername(usernameField.getText());
-                navigatorController.changeScreen(NavigationModel.NavigationScreen.GAMESETUP);
+                navigationController.changeScreen(NavigationModel.NavigationScreen.GAMESETUP);
             }
         });
     }

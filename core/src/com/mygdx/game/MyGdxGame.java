@@ -5,35 +5,35 @@ import com.badlogic.gdx.Gdx;
 import com.mygdx.game.firebase.FirebaseController;
 import com.mygdx.game.firebase.FirebaseInterface;
 import com.mygdx.game.screens.navigation.NavigationModel;
-import com.mygdx.game.screens.navigation.NavigatorController;
+import com.mygdx.game.screens.navigation.NavigationController;
 
 public class MyGdxGame extends Game {
 
-	private NavigatorController navigatorController;
+	private NavigationController navigationController;
 	private FirebaseInterface firebaseInterface;
 	private FirebaseController firebaseController;
 
 	public MyGdxGame(FirebaseInterface firebaseInterface) {
-		this.navigatorController = NavigatorController.getInstance();
+		this.navigationController = NavigationController.getInstance();
 		this.firebaseInterface = firebaseInterface;
 		this.firebaseController = FirebaseController.getInstance();
 	}
 
 	@Override
 	public void create () {
-		this.navigatorController.changeScreen(NavigationModel.NavigationScreen.MAINMENU);
+		this.navigationController.changeScreen(NavigationModel.NavigationScreen.MAINMENU);
 		firebaseController.setFirebaseInterface(firebaseInterface);
 	}
 
 	@Override
 	public void render () {
-		navigatorController.getScreen().render(Gdx.graphics.getDeltaTime());
+		navigationController.getScreen().render(Gdx.graphics.getDeltaTime());
 	}
 	
 	@Override
 	public void dispose () {
-		if (navigatorController != null) {
-			navigatorController.dispose();
+		if (navigationController != null) {
+			navigationController.dispose();
 		}
 	}
 }

@@ -13,15 +13,15 @@ import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.systems.PlayerControlSystem;
 import com.mygdx.game.ecs.systems.PlayerDirectionSystem;
 import com.mygdx.game.ecs.systems.ShootingSystem;
-import com.mygdx.game.screens.navigation.NavigatorController;
+import com.mygdx.game.screens.navigation.NavigationController;
 
 public class GameView implements Screen {
     private Stage stage;
-    private NavigatorController navigatorController;
+    private NavigationController navigationController;
     private GameController gameController;
 
-    public GameView(NavigatorController navigatorController, GameController gameController) {
-        this.navigatorController = navigatorController;
+    public GameView(NavigationController navigationController, GameController gameController) {
+        this.navigationController = navigationController;
         this.gameController = gameController;
         stage = new Stage(new ScreenViewport());
 
@@ -79,6 +79,7 @@ public class GameView implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        gameController.checkIfPlayerHasDied();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         GameEngine.getInstance().update(delta);

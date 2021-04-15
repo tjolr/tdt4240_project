@@ -11,16 +11,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.screens.navigation.NavigationModel;
-import com.mygdx.game.screens.navigation.NavigatorController;
+import com.mygdx.game.screens.navigation.NavigationController;
 
 public class SettingsView implements Screen {
 
     private static final String TEXT_MAIN_MENU = "MAIN MENU";
     private Stage stage;
-    private NavigatorController navigatorController;
+    private NavigationController navigationController;
 
-    public SettingsView(NavigatorController navigatorController) {
-        this.navigatorController = navigatorController;
+    public SettingsView(NavigationController navigationController) {
+        this.navigationController = navigationController;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
@@ -44,7 +44,7 @@ public class SettingsView implements Screen {
         mainMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                navigatorController.changeScreen(NavigationModel.NavigationScreen.MAINMENU);
+                navigationController.changeScreen(NavigationModel.NavigationScreen.MAINMENU);
             }
         });
     }

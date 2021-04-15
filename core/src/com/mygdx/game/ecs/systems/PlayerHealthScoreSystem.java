@@ -29,10 +29,10 @@ public class PlayerHealthScoreSystem extends IteratingSystem {
 
     private final float healthBarHeight = Gdx.graphics.getHeight() * 0.02f;
     final float originY = Gdx.graphics.getHeight() - healthBarHeight * 4;
-    private final float marginX = 30f;
+    private final float marginX = 35f;
 
     private GlobalStateModel globalStateModel;
-    private int numberOfExternalPlayers;
+    private int numberOfExternalPlayers = 1;
 
     public PlayerHealthScoreSystem() {
         super(Family.all(HealthComponent.class).one(ExternalPlayerComponent.class).exclude(BotComponent.class).get());
@@ -51,6 +51,7 @@ public class PlayerHealthScoreSystem extends IteratingSystem {
         // Set number of external players to calculate how much width each player health bar should have
         if (globalStateModel.getPlayerUpdateModels().size() != numberOfExternalPlayers){
             numberOfExternalPlayers = globalStateModel.getPlayerUpdateModels().size();
+
         }
 
         if (externalPlayerComponent != null) {
@@ -68,8 +69,8 @@ public class PlayerHealthScoreSystem extends IteratingSystem {
     public void drawNameHealthScore(HealthComponent healthComponent, float maxHealthWidthAdjusted, float currOriginX, float currOriginY, String playerName, int playerScore) {
         // Calculate healthWidth to be shown, and maxHealthwidth
         float healthWidth = maxHealthWidthAdjusted * (healthComponent.health / healthComponent.maxHealth) - 2 * marginX;
+        healthWidth = healthWidth < 0 ? 0 : healthWidth;
         float maxHealthWidth = maxHealthWidthAdjusted - 2 * marginX;
-
         currOriginX = currOriginX + marginX;
 
         // Draw healthbar fill with colors corresponding to health level
@@ -99,7 +100,7 @@ public class PlayerHealthScoreSystem extends IteratingSystem {
         font.draw(sb, playerName, currOriginX, currOriginY + 3 * healthBarHeight);
 
         String score = String.valueOf(playerScore);
-        font.draw(sb, score , currOriginX + healthWidth - (25f * score.length()),currOriginY + 3 * healthBarHeight);
+        font.draw(sb, score , currOriginX + maxHealthWidth - (25f * score.length()),currOriginY + 3 * healthBarHeight);
         sb.end();
     }
 }

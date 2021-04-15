@@ -15,13 +15,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.game_state.GlobalStateController;
 import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
-import com.mygdx.game.screens.navigation.NavigatorController;
+import com.mygdx.game.screens.navigation.NavigationController;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class RoomView implements Screen {
-    private NavigatorController navigatorController;
+    private NavigationController navigationController;
     private RoomController roomController;
     private RoomModel roomModel;
 
@@ -36,11 +36,11 @@ public class RoomView implements Screen {
     private Stage stage;
 
     public RoomView(
-        NavigatorController navigatorController,
+        NavigationController navigationController,
         RoomController roomController,
         RoomModel roomModel
     ) {
-        this.navigatorController = navigatorController;
+        this.navigationController = navigationController;
         this.roomController = roomController;
         this.roomModel = roomModel;
 
@@ -65,11 +65,6 @@ public class RoomView implements Screen {
         ScrollPane scrollPane = new ScrollPane(playersTable, skin);
         rootTable.add(scrollPane).size(1000,500);
 
-        //Tmp player list, will be replaced when network is implemented.
-        ArrayList<String> mockPlayers = new ArrayList<>();
-        mockPlayers.add("Kari");
-        mockPlayers.add("Per");
-
         Label titleLabel = new Label("Players:", skin);
         titleLabel.setFontScale(6f);
         playersTable.add(titleLabel);
@@ -82,7 +77,7 @@ public class RoomView implements Screen {
             startGameButton.addListener(new ChangeListener() {
                 @Override
                 public void changed(ChangeEvent event, Actor actor) {
-                navigatorController.changeScreen(NavigationModel.NavigationScreen.GAME);
+                navigationController.changeScreen(NavigationModel.NavigationScreen.GAME);
                 roomController.setGameStateActive();
                 }
             });
@@ -144,5 +139,6 @@ public class RoomView implements Screen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        roomController.disposeRoomListeners();
     }
 }
