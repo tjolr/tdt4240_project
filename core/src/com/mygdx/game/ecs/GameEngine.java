@@ -13,7 +13,7 @@ import com.mygdx.game.ecs.entities.EntityFactory;
 import com.mygdx.game.ecs.systems.BotSpawnSystem;
 import com.mygdx.game.ecs.systems.BoundSystem;
 import com.mygdx.game.ecs.systems.CollisionSystem;
-import com.mygdx.game.ecs.systems.HealthRenderSystem;
+import com.mygdx.game.ecs.systems.PlayerHealthScoreSystem;
 import com.mygdx.game.ecs.systems.MovementSystem;
 import com.mygdx.game.ecs.systems.PlayerControlSystem;
 import com.mygdx.game.ecs.systems.PlayerDirectionSystem;
@@ -63,7 +63,7 @@ public class GameEngine extends PooledEngine {
         gameEngineInstance.addSystem(new ShootingSystem());
         gameEngineInstance.addSystem(new BulletSystem());
         gameEngineInstance.addSystem(new BotControlSystem());
-        gameEngineInstance.addSystem(new HealthRenderSystem());
+        gameEngineInstance.addSystem(new PlayerHealthScoreSystem());
         gameEngineInstance.addSystem(new BotSpawnSystem());
         gameEngineInstance.addSystem(new BoundSystem());
         gameEngineInstance.addSystem(new CollisionSystem());
