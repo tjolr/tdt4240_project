@@ -4,11 +4,9 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.components.BotComponent;
 import com.mygdx.game.ecs.components.DirectionComponent;
-import com.mygdx.game.ecs.components.PlayerComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
@@ -16,6 +14,9 @@ public class BotControlSystem extends IteratingSystem {
     private final ComponentMapper<PositionComponent> positionMapper;
     private final ComponentMapper<DirectionComponent> directionMapper;
     private final ComponentMapper<VelocityComponent> velocityMapper;
+    private final ComponentMapper<BotComponent> botComponentMapper;
+
+    private final Entity player;
 
     public BotControlSystem() {
         super(Family.all(
@@ -28,6 +29,9 @@ public class BotControlSystem extends IteratingSystem {
         positionMapper = ComponentMapper.getFor(PositionComponent.class);
         directionMapper = ComponentMapper.getFor(DirectionComponent.class);
         velocityMapper = ComponentMapper.getFor(VelocityComponent.class);
+        botComponentMapper = ComponentMapper.getFor(BotComponent.class);
+
+        player = GameEngine.getInstance().getPlayer();
     }
 
     @Override
@@ -35,16 +39,16 @@ public class BotControlSystem extends IteratingSystem {
         PositionComponent botPosition = positionMapper.get(entity);
         DirectionComponent botDirection = directionMapper.get(entity);
         VelocityComponent botVelocity = velocityMapper.get(entity);
-
-        ImmutableArray<Entity> players = GameEngine.getInstance().getEntitiesFor(
-                Family.all(PlayerComponent.class).get()
-        );
-        if (players.size() == 0)
-            return;
-
-        PositionComponent playerPosition = positionMapper.get(players.first());
+        PositionComponent playerPosition = positionMapper.get(player);
+        BotComponent botComponent = botComponentMapper.get(entity);
 
         botDirection.direction.set(playerPosition.position).sub(botPosition.position);
-        botVelocity.velocity.set(botDirection.direction).scl(1f/botDirection.direction.len());
+
+        // don't want to move if attacking
+        if (botComponent.attacking) {
+            botVelocity.velocity.set(0, 0);
+        } else {
+            botVelocity.velocity.set(botDirection.direction).scl(1f / botDirection.direction.len());
+        }
     }
 }

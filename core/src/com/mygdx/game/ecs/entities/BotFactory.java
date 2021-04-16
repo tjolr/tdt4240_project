@@ -58,6 +58,9 @@ public class BotFactory {
 
         velocity.speed = 150;
 
+        botComponent.attackInterval = 800;
+        botComponent.attackPower = 5;
+
         zombie.add(position);
         zombie.add(sprite);
         zombie.add(direction);

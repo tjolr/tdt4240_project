@@ -10,6 +10,7 @@ import com.mygdx.game.ecs.components.DirectionComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
 import com.mygdx.game.ecs.entities.EntityFactory;
+import com.mygdx.game.ecs.systems.BotAttackSystem;
 import com.mygdx.game.ecs.systems.BotSpawnSystem;
 import com.mygdx.game.ecs.systems.BoundSystem;
 import com.mygdx.game.ecs.systems.CollisionSystem;
@@ -67,6 +68,7 @@ public class GameEngine extends PooledEngine {
         gameEngineInstance.addSystem(new BotSpawnSystem());
         gameEngineInstance.addSystem(new BoundSystem());
         gameEngineInstance.addSystem(new CollisionSystem());
+        gameEngineInstance.addSystem(new BotAttackSystem());
     }
 
     private void createBackground() {
@@ -88,7 +90,6 @@ public class GameEngine extends PooledEngine {
 
         gameEngineInstance.addEntity(background);
     }
-
 
     private void addBotSpawner() {
         Entity spawner = gameEngineInstance.createEntity();

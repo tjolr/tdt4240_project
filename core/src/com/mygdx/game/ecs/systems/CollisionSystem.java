@@ -16,12 +16,14 @@ import com.mygdx.game.ecs.components.SpriteComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
 public class CollisionSystem extends IteratingSystem {
-    private ComponentMapper<SpriteComponent> spriteMapper;
-    private ComponentMapper<CollisionComponent> collisionMapper;
+    private final ComponentMapper<SpriteComponent> spriteMapper;
+    private final ComponentMapper<BotComponent> botComponentMapper;
 
     public CollisionSystem() {
         super(Family.all(BotComponent.class, SpriteComponent.class, PositionComponent.class).get());
+
         spriteMapper = ComponentMapper.getFor(SpriteComponent.class);
+        botComponentMapper = ComponentMapper.getFor(BotComponent.class);
     }
 
     public void processEntity(Entity entity, float deltaTime) {
@@ -30,7 +32,13 @@ public class CollisionSystem extends IteratingSystem {
             if(colliding(bullet, entity)) {
                 GameEngine.getInstance().removeEntity(entity);
                 GameEngine.getInstance().removeEntity(bullet);
+                // TODO: Increase player score here
             }
+        }
+
+        if (colliding(GameEngine.getInstance().getPlayer(), entity)) {
+            BotComponent botComponent = botComponentMapper.get(entity);
+            botComponent.attacking = true;
         }
     }
 
