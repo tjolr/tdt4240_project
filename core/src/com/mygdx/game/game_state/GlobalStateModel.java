@@ -11,6 +11,8 @@ public class GlobalStateModel {
     private static GlobalStateModel globalStateModelInstance = null;
 
     private String username;
+
+    private String userPlayerUpdateModelId;
     private String host;
     private ArrayList<String> players;
 
@@ -87,5 +89,13 @@ public class GlobalStateModel {
 
     public void setPlayerUpdateModel(PlayerUpdateModel playerUpdateModel) {
         this.playerUpdateModels.put(playerUpdateModel.player, playerUpdateModel);
+    }
+
+    public String getUserPlayerUpdateModelId() {
+        return userPlayerUpdateModelId;
+    }
+
+    public void setUserPlayerUpdateModelId(String userPlayerUpdateModelId) {
+        this.userPlayerUpdateModelId = userPlayerUpdateModelId;
     }
 }

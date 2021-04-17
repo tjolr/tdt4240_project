@@ -35,8 +35,18 @@ public class FirebaseController implements FirebaseInterface {
     }
 
     @Override
-    public void appendToArrayInDb(String target, Object value) {
-        firebaseInterface.appendToArrayInDb(target, value);
+    public void appendToArrayInDb(String target, Object value, boolean playerUpdateModel) {
+        firebaseInterface.appendToArrayInDb(target, value, playerUpdateModel);
+    }
+
+    @Override
+    public void incrementValueInDb(String target, int incrementValue) {
+        firebaseInterface.incrementValueInDb(target, incrementValue);
+    }
+
+    @Override
+    public void decrementValueInDb(String target, int decrementValue) {
+        firebaseInterface.decrementValueInDb(target, decrementValue);
     }
 
     @Override
@@ -93,5 +103,9 @@ public class FirebaseController implements FirebaseInterface {
 
     public void setPlayerUpdateModel(PlayerUpdateModel playerUpdateModel) {
         globalStateController.setPlayerUpdateModel(playerUpdateModel);
+    }
+
+    public void setPlayerUpdateModelId(String playerUpdateModelId) {
+        globalStateController.setUserPlayerUpdateModelId(playerUpdateModelId);
     }
 }

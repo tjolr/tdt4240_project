@@ -90,7 +90,7 @@ public class ResultView implements Screen {
         while (iter.hasNext()) {
             Map.Entry<String, PlayerUpdateModel> playerUpdateModelEntry = iter.next();
             PlayerUpdateModel playerUpdateModel = playerUpdateModelEntry.getValue();
-            String aliveOrDeadText = (playerUpdateModel.health == 0) ? "(dead)" : "(alive)";
+            String aliveOrDeadText = (playerUpdateModel.health <= 0) ? "(dead)" : "(alive)";
             String playerStatus = playerUpdateModel.player + " " + aliveOrDeadText;
 
             Label playerStatusLabel = new Label(playerStatus, skin);

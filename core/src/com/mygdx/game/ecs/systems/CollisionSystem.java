@@ -14,16 +14,23 @@ import com.mygdx.game.ecs.components.CollisionComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
+import com.mygdx.game.firebase.FirebaseController;
+import com.mygdx.game.game_state.GlobalStateModel;
 
 public class CollisionSystem extends IteratingSystem {
     private final ComponentMapper<SpriteComponent> spriteMapper;
     private final ComponentMapper<BotComponent> botComponentMapper;
+    private GlobalStateModel globalStateModel;
+    private FirebaseController firebaseController;
 
     public CollisionSystem() {
         super(Family.all(BotComponent.class, SpriteComponent.class, PositionComponent.class).get());
 
         spriteMapper = ComponentMapper.getFor(SpriteComponent.class);
         botComponentMapper = ComponentMapper.getFor(BotComponent.class);
+
+        this.globalStateModel = GlobalStateModel.getInstance();
+        this.firebaseController = FirebaseController.getInstance();
     }
 
     public void processEntity(Entity entity, float deltaTime) {
@@ -32,7 +39,12 @@ public class CollisionSystem extends IteratingSystem {
             if(colliding(bullet, entity)) {
                 GameEngine.getInstance().removeEntity(entity);
                 GameEngine.getInstance().removeEntity(bullet);
-                // TODO: Increase player score here
+
+                firebaseController.incrementValueInDb(
+                    "game."+globalStateModel.getGameId()+".playerUpdateModels."
+                    +globalStateModel.getUserPlayerUpdateModelId()+".score",
+                    5
+                );
             }
         }
 

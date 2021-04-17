@@ -41,7 +41,7 @@ public class GameSetupController {
         globalStateController.setUserAsGameHost();
 
         // Creating the arrays, and initializing with the first player which is the host itself.
-        PlayerUpdateModel hostPlayerUpdateModel = new PlayerUpdateModel(globalStateModel.getHost(), 100f, 0);
+        PlayerUpdateModel hostPlayerUpdateModel = new PlayerUpdateModel(globalStateModel.getHost(), 100, 0);
 
         ArrayList<PlayerUpdateModel> playerUpdateModels = new ArrayList<>();
         ArrayList<String> players = new ArrayList<>();
@@ -58,8 +58,8 @@ public class GameSetupController {
         );
 
         firebaseController.writeToDb("game." + gameId, gameModel);
-        firebaseController.appendToArrayInDb("game."+gameId+".playerUpdateModels", hostPlayerUpdateModel);
-        firebaseController.appendToArrayInDb("game."+gameId+".players", globalStateModel.getHost());
+        firebaseController.appendToArrayInDb("game."+gameId+".playerUpdateModels", hostPlayerUpdateModel, true);
+        firebaseController.appendToArrayInDb("game."+gameId+".players", globalStateModel.getHost(), false);
 
         firebaseController.stopListenToAvailableGames();
         firebaseController.listenToPlayersInGame(gameId);
@@ -77,10 +77,10 @@ public class GameSetupController {
         globalStateController.setHost(simpleGameModel.host);
         globalStateController.setGameId(simpleGameModel.gameId);
 
-        PlayerUpdateModel playerUpdateModel = new PlayerUpdateModel(globalStateModel.getUsername(), 100f, 0);
+        PlayerUpdateModel playerUpdateModel = new PlayerUpdateModel(globalStateModel.getUsername(), 100, 0);
 
-        firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".playerUpdateModels", playerUpdateModel);
-        firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".players", globalStateModel.getUsername());
+        firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".playerUpdateModels", playerUpdateModel, true);
+        firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".players", globalStateModel.getUsername(), false);
 
         firebaseController.stopListenToAvailableGames();
         firebaseController.listenToPlayersInGame(simpleGameModel.gameId);
