@@ -8,6 +8,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.MutableData;
+import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 import com.mygdx.game.items.PlayerUpdateModel;
 import com.mygdx.game.items.SimpleGameModel;
@@ -60,9 +62,69 @@ public class FirebaseService implements FirebaseInterface {
     }
 
     @Override
-    public void appendToArrayInDb(String target, Object value) {
+    public void appendToArrayInDb(String target, Object value, boolean playerUpdateModel) {
+        ref = getRefFromFullTarget(target).push();
+        ref.setValue(value);
+
+        if (playerUpdateModel) {
+            String itemKey = ref.getKey();
+            firebaseController.setPlayerUpdateModelId(itemKey);
+        }
+    }
+
+    @Override
+    public void incrementValueInDb(String target, int incrementValue) {
         ref = getRefFromFullTarget(target);
-        ref.push().setValue(value);
+        ref.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                if (currentData.getValue() == null) {
+                    currentData.setValue(0);
+                } else {
+                    // Using a Transaction to increment the server value
+                    currentData.setValue((Long) currentData.getValue() + incrementValue);
+                }
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                if (error != null) {
+                    System.out.println("Firebase increment failed.");
+                } else {
+                    System.out.println("Firebase increment succeeded.");
+                }
+            }
+        });
+    }
+
+    @Override
+    public void decrementValueInDb(String target, int decrementValue) {
+        ref = getRefFromFullTarget(target);
+        ref.runTransaction(new Transaction.Handler() {
+            @NonNull
+            @Override
+            public Transaction.Result doTransaction(@NonNull MutableData currentData) {
+                if (currentData.getValue() == null) {
+                    currentData.setValue(0);
+                } else if (currentData.getValue(int.class) <= 0) {
+                    currentData.setValue(0);
+                } else {
+                    currentData.setValue((Long) currentData.getValue() - decrementValue);
+                }
+                return Transaction.success(currentData);
+            }
+
+            @Override
+            public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
+                if (error != null) {
+                    System.out.println("Firebase decrement failed.");
+                } else {
+                    System.out.println("Firebase decrement succeeded.");
+                }
+            }
+        });
     }
 
     @Override

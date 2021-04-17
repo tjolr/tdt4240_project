@@ -70,6 +70,10 @@ public class GlobalStateController {
         this.globalStateModel.setPlayerUpdateModel(playerUpdateModel);
     }
 
+    public void setUserPlayerUpdateModelId(String userPlayerUpdateModelId) {
+        this.globalStateModel.setUserPlayerUpdateModelId(userPlayerUpdateModelId);
+    }
+
     public void clearGlobalState(){
         this.globalStateModel.clearGlobalStateModel();
     }
