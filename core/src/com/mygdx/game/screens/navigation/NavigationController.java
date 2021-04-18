@@ -12,7 +12,6 @@ import com.mygdx.game.screens.main_menu.MainMenuView;
 import com.mygdx.game.screens.result.ResultController;
 import com.mygdx.game.screens.result.ResultView;
 import com.mygdx.game.screens.room.RoomController;
-import com.mygdx.game.screens.room.RoomModel;
 import com.mygdx.game.screens.room.RoomView;
 import com.mygdx.game.screens.set_name.SetNameView;
 import com.mygdx.game.screens.settings.SettingsView;
@@ -51,9 +50,8 @@ public class NavigationController implements Disposable {
                     this.setScreen(gameSetupView);
                     break;
                 case ROOM:
-                    RoomModel roomModel = new RoomModel();
-                    RoomController roomController = new RoomController(roomModel);
-                    RoomView roomView = new RoomView(this, roomController, roomModel);
+                    RoomController roomController = new RoomController();
+                    RoomView roomView = new RoomView(this, roomController);
                     this.setScreen(roomView);
                     break;
                 case SETTINGS:
@@ -62,7 +60,7 @@ public class NavigationController implements Disposable {
                     break;
                 case GAME:
                     GameController gameController = GameController.getInstance();
-                    GameView gameView = new GameView(this, gameController);
+                    GameView gameView = new GameView(gameController);
                     this.setScreen(gameView);
                     break;
                 case RESULT:

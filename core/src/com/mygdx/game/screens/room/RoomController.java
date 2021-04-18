@@ -6,14 +6,11 @@ import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.items.SimpleGameModel;
 
 public class RoomController {
-
-    private RoomModel roomModel;
     private FirebaseController firebaseController;
     private GlobalStateModel globalStateModel;
     private GlobalStateController globalStateController;
 
-    public RoomController(RoomModel roomModel) {
-        this.roomModel = roomModel;
+    public RoomController() {
         this.firebaseController = FirebaseController.getInstance();
         this.globalStateModel = GlobalStateModel.getInstance();
         this.globalStateController = GlobalStateController.getInstance();
