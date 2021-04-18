@@ -35,8 +35,8 @@ public class PlayerHealthScoreSystem extends IteratingSystem {
     private int numberOfExternalPlayers = 1;
 
     public PlayerHealthScoreSystem() {
-        super(Family.all(HealthComponent.class).one(ExternalPlayerComponent.class).exclude(BotComponent.class).get());
-
+        //super(Family.all(HealthComponent.class).one(ExternalPlayerComponent.class).exclude(BotComponent.class).get());
+        super(Family.all(HealthComponent.class).one(ExternalPlayerComponent.class).get());
         healthMapper = ComponentMapper.getFor(HealthComponent.class);
         externalPlayerMapper = ComponentMapper.getFor(ExternalPlayerComponent.class);
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.assets.AssetsController;
 import com.mygdx.game.game_state.GlobalStateController;
 import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
@@ -21,10 +22,13 @@ public class SetNameView implements Screen {
     private GlobalStateController globalStateController;
     private GlobalStateModel globalStateModel;
     private Stage stage;
+    private AssetsController assetsController;
+
 
     public SetNameView(NavigationController navigationController){
         this.navigationController = navigationController;
         this.globalStateController = GlobalStateController.getInstance();
+        this.assetsController = AssetsController.getInstance();
 
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -36,14 +40,10 @@ public class SetNameView implements Screen {
         rootTable.setFillParent(true);
         stage.addActor(rootTable);
 
-        Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
-        skin.getFont("font").getData().setScale(5f);
-
-        final TextField usernameField = new TextField("Name", skin);
+        final TextField usernameField = new TextField("Name",  assetsController.getSkin());
         usernameField.setMaxLength(12);
 
-        TextButton submitButton = new TextButton("Submit", skin);
-
+        TextButton submitButton = new TextButton("Submit",  assetsController.getSkin());
 
         rootTable.add(usernameField).width(500);
         rootTable.row().padTop(60);
@@ -62,6 +62,8 @@ public class SetNameView implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        this.assetsController.renderMenuBackground();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

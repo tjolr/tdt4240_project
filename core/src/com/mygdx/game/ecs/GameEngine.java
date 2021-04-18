@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.assets.AssetsController;
 import com.mygdx.game.ecs.components.BotSpawnComponent;
 import com.mygdx.game.ecs.components.DirectionComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
@@ -33,12 +34,14 @@ public class GameEngine extends PooledEngine {
 
     private final EntityFactory entityFactory;
     private static GlobalStateModel globalStateModel;
+    private static AssetsController assetsController;
 
     private Entity player;
 
     private GameEngine() {
         entityFactory = EntityFactory.getInstance();
         globalStateModel = GlobalStateModel.getInstance();
+        assetsController = AssetsController.getInstance();
     }
 
     public static GameEngine getInstance() {
@@ -81,8 +84,7 @@ public class GameEngine extends PooledEngine {
         position.position.x = 0;
         position.position.y = 0;
 
-        Texture backgroundTexture = new Texture("sprites/background.png");
-        sprite.textureRegion = new TextureRegion(backgroundTexture, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        sprite.textureRegion = new TextureRegion(assetsController.getBackgroundTextureInGame(),0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         background.add(position);
         background.add(sprite);

@@ -92,8 +92,6 @@ public class FirebaseService implements FirebaseInterface {
             public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
                 if (error != null) {
                     System.out.println("Firebase increment failed.");
-                } else {
-                    System.out.println("Firebase increment succeeded.");
                 }
             }
         });
@@ -120,8 +118,6 @@ public class FirebaseService implements FirebaseInterface {
             public void onComplete(@Nullable DatabaseError error, boolean committed, @Nullable DataSnapshot currentData) {
                 if (error != null) {
                     System.out.println("Firebase decrement failed.");
-                } else {
-                    System.out.println("Firebase decrement succeeded.");
                 }
             }
         });

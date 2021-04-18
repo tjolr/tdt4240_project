@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.assets.AssetsController;
 import com.mygdx.game.game_state.GlobalStateController;
 import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
@@ -27,9 +28,8 @@ public class RoomView implements Screen {
 
     private GlobalStateModel globalStateModel;
     private GlobalStateController globalStateController;
+    private AssetsController assetsController;
 
-
-    private Skin skin;
     private Table playersTable;
 
     private Iterator<String> iter;
@@ -46,6 +46,7 @@ public class RoomView implements Screen {
 
         this.globalStateController = GlobalStateController.getInstance();
         this.globalStateModel = GlobalStateModel.getInstance();
+        this.assetsController = AssetsController.getInstance();
 
 
         stage = new Stage(new ScreenViewport());
@@ -58,20 +59,17 @@ public class RoomView implements Screen {
         rootTable.setFillParent(true);
         stage.addActor(rootTable);
 
-        skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
-        skin.getFont("font").getData().setScale(5f);
-
         playersTable = new Table();
-        ScrollPane scrollPane = new ScrollPane(playersTable, skin);
+        ScrollPane scrollPane = new ScrollPane(playersTable,  assetsController.getSkin());
         rootTable.add(scrollPane).size(1000,500);
 
-        Label titleLabel = new Label("Players:", skin);
+        Label titleLabel = new Label("Players:",  assetsController.getSkin());
         titleLabel.setFontScale(6f);
         playersTable.add(titleLabel);
         playersTable.row().padTop(50);
 
         if (globalStateModel.getHost() != null && globalStateModel.getHost().equals(globalStateModel.getUsername())){
-            TextButton startGameButton = new TextButton("START GAME", skin);
+            TextButton startGameButton = new TextButton("START GAME",  assetsController.getSkin());
             rootTable.add(startGameButton).uniformX();
 
             startGameButton.addListener(new ChangeListener() {
@@ -82,7 +80,7 @@ public class RoomView implements Screen {
                 }
             });
         } else {
-            Label waitForStartLabel = new Label("Wait for host to start the game", skin);
+            Label waitForStartLabel = new Label("Wait for host to start the game",  assetsController.getSkin());
             waitForStartLabel.setFontScale(4f);
             rootTable.row().padTop(90);
             rootTable.add(waitForStartLabel);
@@ -94,6 +92,8 @@ public class RoomView implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        this.assetsController.renderMenuBackground();
+
         iter = this.globalStateModel.getPlayers().iterator();
 
         while(iter.hasNext()) {
@@ -102,13 +102,11 @@ public class RoomView implements Screen {
             if (player.equals(globalStateModel.getHost())) {
                 playerText = playerText.concat(" (host)");
             }
-            Label playerLabel = new Label(playerText, skin);
+            Label playerLabel = new Label(playerText,  assetsController.getSkin());
             playersTable.add(playerLabel);
             playersTable.row();
             iter.remove();
         }
-
-
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
@@ -138,7 +136,6 @@ public class RoomView implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
         roomController.disposeRoomListeners();
     }
 }

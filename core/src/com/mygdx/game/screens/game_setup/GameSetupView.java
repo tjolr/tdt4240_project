@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.assets.AssetsController;
 import com.mygdx.game.items.SimpleGameModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigationController;
@@ -29,11 +30,10 @@ public class GameSetupView implements Screen {
     private static final String TEXT_HOST_GAME = "HOST GAME";
     private static final String TEXT_JOIN = "Join";
     private Stage stage;
+    private AssetsController assetsController;
 
     private Table rootTable;
     private Table availableGamesTable;
-    private float textSize;
-    private Skin skin;
     private Iterator<SimpleGameModel> iter;
     private ArrayList<SimpleGameModel> availableGames;
 
@@ -50,6 +50,8 @@ public class GameSetupView implements Screen {
         this.availableGames = new ArrayList<>();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+
+        this.assetsController = AssetsController.getInstance();
     }
 
     @Override
@@ -59,14 +61,8 @@ public class GameSetupView implements Screen {
 
         stage.addActor(rootTable);
 
-        skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
-
-        TextButton startButton = new TextButton(TEXT_START, skin);
-        TextButton hostGameButton = new TextButton(TEXT_HOST_GAME, skin);
-        textSize = 5f;
-        startButton.getLabel().setFontScale(textSize);
-        hostGameButton.getLabel().setFontScale(textSize);
-
+        TextButton startButton = new TextButton(TEXT_START,  assetsController.getSkin());
+        TextButton hostGameButton = new TextButton(TEXT_HOST_GAME,  assetsController.getSkin());
 
         rootTable.row().pad(50, 0 , 20, 0);
         rootTable.add(startButton).uniformX();
@@ -89,13 +85,12 @@ public class GameSetupView implements Screen {
         });
 
 
-        Label otherGamesTitle = new Label("Join another game: ", skin);
-        otherGamesTitle.setFontScale(textSize);
+        Label otherGamesTitle = new Label("Join another game: ",  assetsController.getSkin());
         rootTable.add(otherGamesTitle);
         rootTable.row();
 
         availableGamesTable = new Table();
-        ScrollPane scrollPane = new ScrollPane(availableGamesTable, skin);
+        ScrollPane scrollPane = new ScrollPane(availableGamesTable,  assetsController.getSkin());
         scrollPane.setFadeScrollBars(false);
         scrollPane.setColor(Color.DARK_GRAY);
         rootTable.add(scrollPane).size(1000,500);
@@ -116,23 +111,20 @@ public class GameSetupView implements Screen {
         return gamesToAdd;
     }
 
-
-
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        this.assetsController.renderMenuBackground();
 
         iter = this.getNewAvailableGames().iterator();
 
         while (iter.hasNext()) {
             final SimpleGameModel availableGame = iter.next();
 
-            Label gameLabel = new Label(availableGame.gameId +" ", skin);
-            TextButton joinButton = new TextButton(TEXT_JOIN,skin);
-
-            gameLabel.setFontScale(textSize);
-            joinButton.getLabel().setFontScale(textSize);
+            Label gameLabel = new Label(availableGame.gameId +" ",  assetsController.getSkin());
+            TextButton joinButton = new TextButton(TEXT_JOIN, assetsController.getSkin());
 
             availableGamesTable.add(gameLabel);
             availableGamesTable.add(joinButton);
