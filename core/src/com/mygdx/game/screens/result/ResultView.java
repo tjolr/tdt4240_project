@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -40,11 +39,10 @@ public class ResultView implements Screen {
         this.resultController = resultController;
 
         this.globalStateModel = GlobalStateModel.getInstance();
+        this.assetsController = AssetsController.getInstance();
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        this.assetsController = AssetsController.getInstance();
-
     }
 
     @Override
@@ -135,6 +133,7 @@ public class ResultView implements Screen {
 
     @Override
     public void dispose() {
+        stage.dispose();
         resultController.disposeResultController();
     }
 }

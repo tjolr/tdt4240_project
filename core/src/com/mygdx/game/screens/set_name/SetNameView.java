@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -13,14 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.assets.AssetsController;
 import com.mygdx.game.game_state.GlobalStateController;
-import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigationController;
 
 public class SetNameView implements Screen {
     private NavigationController navigationController;
     private GlobalStateController globalStateController;
-    private GlobalStateModel globalStateModel;
     private Stage stage;
     private AssetsController assetsController;
 
@@ -92,6 +89,6 @@ public class SetNameView implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

@@ -7,27 +7,21 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.assets.AssetsController;
-import com.mygdx.game.game_state.GlobalStateController;
 import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigationController;
-
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class RoomView implements Screen {
     private NavigationController navigationController;
     private RoomController roomController;
-    private RoomModel roomModel;
 
     private GlobalStateModel globalStateModel;
-    private GlobalStateController globalStateController;
     private AssetsController assetsController;
 
     private Table playersTable;
@@ -37,14 +31,11 @@ public class RoomView implements Screen {
 
     public RoomView(
         NavigationController navigationController,
-        RoomController roomController,
-        RoomModel roomModel
+        RoomController roomController
     ) {
         this.navigationController = navigationController;
         this.roomController = roomController;
-        this.roomModel = roomModel;
 
-        this.globalStateController = GlobalStateController.getInstance();
         this.globalStateModel = GlobalStateModel.getInstance();
         this.assetsController = AssetsController.getInstance();
 
