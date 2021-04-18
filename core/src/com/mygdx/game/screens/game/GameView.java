@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.assets.AssetsController;
 import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.systems.PlayerControlSystem;
 import com.mygdx.game.ecs.systems.PlayerDirectionSystem;
@@ -19,10 +20,12 @@ public class GameView implements Screen {
     private Stage stage;
     private NavigationController navigationController;
     private GameController gameController;
+    private AssetsController assetsController;
 
     public GameView(NavigationController navigationController, GameController gameController) {
         this.navigationController = navigationController;
         this.gameController = gameController;
+        this.assetsController = AssetsController.getInstance();
         stage = new Stage(new ScreenViewport());
 
         initializeTouchpad(stage);
@@ -31,7 +34,6 @@ public class GameView implements Screen {
     }
 
     private void initializeTouchpad(Stage stage) {
-        Skin skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
         float sizeFactor = 0.14f;
@@ -39,7 +41,7 @@ public class GameView implements Screen {
         float widthFactor = 0.18f;
         int deadzoneRadius = 20;
 
-        Touchpad move = new Touchpad(deadzoneRadius, skin);
+        Touchpad move = new Touchpad(deadzoneRadius,  assetsController.getSkin());
         move.setSize(width * sizeFactor, width * sizeFactor);
         move.setPosition(width * widthFactor, height * heightFactor);
         move.addListener(new ChangeListener() {
@@ -53,7 +55,7 @@ public class GameView implements Screen {
         });
 
         ShootingSystem.setFire(false);
-        Touchpad shoot = new Touchpad(deadzoneRadius, skin);
+        Touchpad shoot = new Touchpad(deadzoneRadius,  assetsController.getSkin());
         shoot.setSize(width * sizeFactor, width * sizeFactor);
         shoot.setPosition(width * (1f - widthFactor) - shoot.getWidth(), height * heightFactor);
         shoot.addListener(new ChangeListener() {

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.assets.AssetsController;
 import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.items.PlayerUpdateModel;
 import com.mygdx.game.screens.navigation.NavigationController;
@@ -25,13 +26,12 @@ public class ResultView implements Screen {
     private NavigationController navigationController;
     private ResultController resultController;
     private Stage stage;
+    private AssetsController assetsController;
 
     private GlobalStateModel globalStateModel;
 
     private Table rootTable;
     private Table playerResultTable;
-    private float textSize;
-    private Skin skin;
     private Map<String, PlayerUpdateModel> sortedPlayerUpdateModels;
     private Iterator<Map.Entry<String, PlayerUpdateModel>> iter;
 
@@ -40,12 +40,12 @@ public class ResultView implements Screen {
         this.resultController = resultController;
 
         this.globalStateModel = GlobalStateModel.getInstance();
-        this.skin = new Skin(Gdx.files.internal("skin/neon-ui.json"));
-        skin.getFont("font").getData().setScale(5f);
+
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-    }
+        this.assetsController = AssetsController.getInstance();
 
+    }
 
     @Override
     public void show() {
@@ -54,20 +54,18 @@ public class ResultView implements Screen {
 
         stage.addActor(rootTable);
 
-        Label titleLabel = new Label("Result: ", skin);
+        Label titleLabel = new Label("Result: ",  assetsController.getSkin());
         titleLabel.setFontScale(6f);
         rootTable.add(titleLabel);
         rootTable.row();
 
         playerResultTable = new Table();
-        ScrollPane scrollPane = new ScrollPane(playerResultTable, skin);
+        ScrollPane scrollPane = new ScrollPane(playerResultTable,  assetsController.getSkin());
         rootTable.add(scrollPane).size(Gdx.graphics.getWidth() * 0.9f,500);
 
         rootTable.row().padTop(50);
-        TextButton mainMenuButton = new TextButton("Main Menu", skin);
+        TextButton mainMenuButton = new TextButton("Main Menu",  assetsController.getSkin());
         rootTable.add(mainMenuButton).uniformX();
-
-
 
         mainMenuButton.addListener(new ChangeListener() {
             @Override
@@ -82,6 +80,9 @@ public class ResultView implements Screen {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        this.assetsController.renderMenuBackground();
+
+
         sortedPlayerUpdateModels = this.resultController.sortPlayerUpdateModelsByScore(globalStateModel.getPlayerUpdateModels());
         iter = this.sortedPlayerUpdateModels.entrySet().iterator();
 
@@ -93,10 +94,10 @@ public class ResultView implements Screen {
             String aliveOrDeadText = (playerUpdateModel.health <= 0) ? "(dead)" : "(alive)";
             String playerStatus = playerUpdateModel.player + " " + aliveOrDeadText;
 
-            Label playerStatusLabel = new Label(playerStatus, skin);
+            Label playerStatusLabel = new Label(playerStatus,  assetsController.getSkin());
             playerStatusLabel.setWidth(Gdx.graphics.getWidth() * 0.7f);
 
-            Label scoreLabel = new Label(" " + playerUpdateModel.score + "p", skin);
+            Label scoreLabel = new Label(" " + playerUpdateModel.score + "p",  assetsController.getSkin());
             scoreLabel.setWidth(Gdx.graphics.getWidth() * 0.2f);
 
             playerResultTable.add(playerStatusLabel);
@@ -135,7 +136,5 @@ public class ResultView implements Screen {
     @Override
     public void dispose() {
         resultController.disposeResultController();
-        skin.dispose();
-
     }
 }
