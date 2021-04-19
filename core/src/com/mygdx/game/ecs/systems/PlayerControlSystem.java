@@ -12,7 +12,7 @@ public class PlayerControlSystem extends IteratingSystem {
     private static float moveJoystickX;
     private static float moveJoystickY;
 
-    private ComponentMapper<VelocityComponent> velocityMapper;
+    private final ComponentMapper<VelocityComponent> velocityMapper;
 
     public PlayerControlSystem() {
         super(Family.all(PlayerComponent.class, VelocityComponent.class).get());
@@ -28,5 +28,8 @@ public class PlayerControlSystem extends IteratingSystem {
     public static void setMoveJoystick(float x, float y) {
         PlayerControlSystem.moveJoystickX = x;
         PlayerControlSystem.moveJoystickY = y;
+        if (!PlayerDirectionSystem.getIsTouched()) {
+            PlayerDirectionSystem.setDirection(x, y);
+        }
     }
 }
