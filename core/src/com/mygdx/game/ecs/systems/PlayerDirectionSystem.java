@@ -14,7 +14,7 @@ public class PlayerDirectionSystem extends IteratingSystem {
     private static float directionY;
     private static boolean isTouched;
 
-    private ComponentMapper<DirectionComponent> directionMapper;
+    private final ComponentMapper<DirectionComponent> directionMapper;
 
     public PlayerDirectionSystem() {
         super(Family.all(PlayerComponent.class, DirectionComponent.class).get());
@@ -26,25 +26,21 @@ public class PlayerDirectionSystem extends IteratingSystem {
     protected void processEntity(Entity entity, float deltaTime) {
         if (directionX == 0 && directionY == 0)
             return;
-        DirectionComponent direction = directionMapper.get(entity);
-        direction.direction.set(directionX, directionY);
+        directionMapper.get(entity).direction.set(directionX, directionY);
         ShootingSystem.setFire(isTouched);
     }
 
     public static void setDirectionJoystick(float x, float y) {
         setDirection(x, y);
-        if (x != 0 || y != 0) {
-            isTouched = true;
-        }
-    }
-
-    public static void setDirectionWithoutShooting(float x, float y) {
-        setDirection(x, y);
-        isTouched = false;
+        isTouched = x != 0 || y != 0;
     }
 
     public static void setDirection(float x, float y) {
         PlayerDirectionSystem.directionX = x;
         PlayerDirectionSystem.directionY = y;
+    }
+
+    public static boolean getIsTouched() {
+        return isTouched;
     }
 }

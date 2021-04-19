@@ -46,7 +46,6 @@ public class GameView implements Screen {
                 float deltaX = ((Touchpad) actor).getKnobPercentX();
                 float deltaY = ((Touchpad) actor).getKnobPercentY();
                 PlayerControlSystem.setMoveJoystick(deltaX, deltaY);
-                PlayerDirectionSystem.setDirectionWithoutShooting(deltaX, deltaY);
             }
         });
 
@@ -60,7 +59,6 @@ public class GameView implements Screen {
                 float deltaX = ((Touchpad) actor).getKnobPercentX();
                 float deltaY = ((Touchpad) actor).getKnobPercentY();
                 PlayerDirectionSystem.setDirectionJoystick(deltaX, deltaY);
-                ShootingSystem.setFire(true);
             }
         });
 
