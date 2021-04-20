@@ -50,7 +50,7 @@ public class NavigationController implements Disposable {
                     this.setScreen(gameSetupView);
                     break;
                 case ROOM:
-                    RoomController roomController = new RoomController();
+                    RoomController roomController = RoomController.getInstance();
                     RoomView roomView = new RoomView(this, roomController);
                     this.setScreen(roomView);
                     break;
