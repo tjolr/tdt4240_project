@@ -16,8 +16,6 @@ import com.mygdx.game.screens.navigation.NavigationController;
 
 public class MainMenuView implements Screen {
 
-    private static final String TEXT_PLAY = "PLAY NOW";
-    private static final String TEXT_SETTINGS = "SETTINGS";
     private Stage stage;
     private NavigationController navigationController;
     private AssetsController assetsController;
@@ -39,8 +37,8 @@ public class MainMenuView implements Screen {
         Label gameTitle = new Label("Pandemic survival",  assetsController.getSkin());
         gameTitle.setFontScale(5f);
 
-        TextButton playButton = new TextButton(TEXT_PLAY,  assetsController.getSkin());
-        TextButton settingsButton = new TextButton(TEXT_SETTINGS,  assetsController.getSkin());
+        TextButton playButton = new TextButton("PLAY NOW",  assetsController.getSkin());
+        TextButton settingsButton = new TextButton("SETTINGS",  assetsController.getSkin());
 
         table.add(gameTitle);
         table.row().padTop(50);
