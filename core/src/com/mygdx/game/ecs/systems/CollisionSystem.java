@@ -10,10 +10,8 @@ import com.badlogic.gdx.math.Polygon;
 import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.components.BotComponent;
 import com.mygdx.game.ecs.components.BulletComponent;
-import com.mygdx.game.ecs.components.CollisionComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
-import com.mygdx.game.ecs.components.VelocityComponent;
 import com.mygdx.game.firebase.FirebaseController;
 import com.mygdx.game.game_state.GlobalStateModel;
 
@@ -57,8 +55,7 @@ public class CollisionSystem extends IteratingSystem {
     public boolean colliding(Entity first, Entity second) {
         Polygon firstPolygon = spriteMapper.get(first).polygon;
         Polygon secondPolygon = spriteMapper.get(second).polygon;
-        boolean collision = Intersector.overlapConvexPolygons(firstPolygon, secondPolygon);
-        return collision;
+        return Intersector.overlapConvexPolygons(firstPolygon, secondPolygon);
     }
 }
 

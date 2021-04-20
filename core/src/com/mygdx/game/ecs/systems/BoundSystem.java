@@ -6,10 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.ecs.components.BotComponent;
-import com.mygdx.game.ecs.components.BulletComponent;
 import com.mygdx.game.ecs.components.DirectionComponent;
-import com.mygdx.game.ecs.components.PlayerComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
 
@@ -30,7 +27,6 @@ public class BoundSystem extends IteratingSystem {
 
         shapeRenderer = new ShapeRenderer();
         renderQueue = new Array<Entity>();
-
     }
 
     /* update function only for debug purposes */

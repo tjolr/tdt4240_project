@@ -10,9 +10,7 @@ import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
 public class BulletSystem extends IteratingSystem {
-    private ComponentMapper<PositionComponent> positionMapper;
-    private ComponentMapper<VelocityComponent> velocityMapper;
-    private ComponentMapper<BulletComponent> bulletMapper;
+    private final ComponentMapper<BulletComponent> bulletMapper;
 
     public BulletSystem() {
         super(Family.all(PositionComponent.class, VelocityComponent.class, BulletComponent.class).get());

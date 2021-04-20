@@ -1,6 +1,5 @@
 package com.mygdx.game.ecs.systems;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
@@ -15,9 +14,9 @@ public class RenderSystem extends IteratingSystem {
     private SpriteBatch spriteBatch;
     private Array<Entity> renderQueue;
 
-    private ComponentMapper<SpriteComponent> spriteMapper;
-    private ComponentMapper<PositionComponent> positionMapper;
-    private ComponentMapper<DirectionComponent> directionMapper;
+    private final ComponentMapper<SpriteComponent> spriteMapper;
+    private final ComponentMapper<PositionComponent> positionMapper;
+    private final ComponentMapper<DirectionComponent> directionMapper;
 
     public RenderSystem() {
         super(Family.all(SpriteComponent.class, PositionComponent.class, DirectionComponent.class).get());

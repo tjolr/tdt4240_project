@@ -2,11 +2,9 @@ package com.mygdx.game.ecs.entities;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.mygdx.game.ecs.GameEngine;
-import com.mygdx.game.ecs.components.CollisionComponent;
 import com.mygdx.game.ecs.components.DirectionComponent;
 import com.mygdx.game.ecs.components.ExternalPlayerComponent;
 import com.mygdx.game.ecs.components.HealthComponent;
@@ -19,7 +17,6 @@ import com.mygdx.game.ecs.components.VelocityComponent;
 public class PlayerFactory {
     // PlayerFactory is a Singleton class
     private static PlayerFactory playerFactoryInstance = null;
-
 
     private PlayerFactory() {
 
@@ -42,7 +39,6 @@ public class PlayerFactory {
         DirectionComponent direction = GameEngine.getInstance().createComponent(DirectionComponent.class);
         HealthComponent health = GameEngine.getInstance().createComponent(HealthComponent.class);
         ShootingComponent shooting = GameEngine.getInstance().createComponent(ShootingComponent.class);
-        CollisionComponent collision = GameEngine.getInstance().createComponent(CollisionComponent.class);
 
         Texture playerSprite = new Texture("sprites/player.png");
         sprite.textureRegion = new TextureRegion(playerSprite);
@@ -54,7 +50,6 @@ public class PlayerFactory {
 
         position.position.x = x;
         position.position.y = y;
-
 
         float left = 25;
         float bot = 25;
@@ -81,7 +76,6 @@ public class PlayerFactory {
         player.add(direction);
         player.add(health);
         player.add(shooting);
-        player.add(collision);
 
         return player;
     }

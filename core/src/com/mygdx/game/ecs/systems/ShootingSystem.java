@@ -1,6 +1,5 @@
 package com.mygdx.game.ecs.systems;
 
-import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
@@ -16,10 +15,9 @@ import com.mygdx.game.ecs.entities.EntityFactory;
 public class ShootingSystem extends IteratingSystem {
     private static boolean fire = false;
 
-    private ComponentMapper<PositionComponent> positionMapper;
-    private static ComponentMapper<ShootingComponent> shootingMapper;
-    private ComponentMapper<DirectionComponent> directionMapper;
-    private ComponentMapper<SpriteComponent> spriteMapper;
+    private final ComponentMapper<PositionComponent> positionMapper;
+    private final ComponentMapper<ShootingComponent> shootingMapper;
+    private final ComponentMapper<DirectionComponent> directionMapper;
 
     public ShootingSystem() {
         super(Family.all(PlayerComponent.class, PositionComponent.class, ShootingComponent.class, DirectionComponent.class, SpriteComponent.class).get());
@@ -27,7 +25,6 @@ public class ShootingSystem extends IteratingSystem {
         positionMapper = ComponentMapper.getFor(PositionComponent.class);
         shootingMapper = ComponentMapper.getFor(ShootingComponent.class);
         directionMapper = ComponentMapper.getFor(DirectionComponent.class);
-        spriteMapper = ComponentMapper.getFor(SpriteComponent.class);
     }
 
     public void processEntity(Entity entity, float deltaTime) {
