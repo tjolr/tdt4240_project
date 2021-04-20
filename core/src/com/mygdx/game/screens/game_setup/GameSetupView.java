@@ -25,9 +25,6 @@ public class GameSetupView implements Screen {
     private GameSetupController gameSetupController;
     private GameSetupModel gameSetupModel;
 
-    private static final String TEXT_START = "START NOW";
-    private static final String TEXT_HOST_GAME = "HOST GAME";
-    private static final String TEXT_JOIN = "Join";
     private Stage stage;
     private AssetsController assetsController;
 
@@ -60,7 +57,7 @@ public class GameSetupView implements Screen {
 
         stage.addActor(rootTable);
 
-        TextButton hostGameButton = new TextButton(TEXT_HOST_GAME,  assetsController.getSkin());
+        TextButton hostGameButton = new TextButton("HOST GAME",  assetsController.getSkin());
 
         rootTable.row().pad(20, 0 , 20, 0);
         rootTable.add(hostGameButton).uniformX();
@@ -114,7 +111,7 @@ public class GameSetupView implements Screen {
             final SimpleGameModel availableGame = iter.next();
 
             Label gameLabel = new Label(availableGame.gameId +" ",  assetsController.getSkin());
-            TextButton joinButton = new TextButton(TEXT_JOIN, assetsController.getSkin());
+            TextButton joinButton = new TextButton("Join", assetsController.getSkin());
 
             availableGamesTable.add(gameLabel);
             availableGamesTable.add(joinButton);

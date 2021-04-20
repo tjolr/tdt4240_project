@@ -16,7 +16,6 @@ import com.mygdx.game.screens.navigation.NavigationController;
 
 public class SettingsView implements Screen {
 
-    private static final String TEXT_MAIN_MENU = "MAIN MENU";
     private Stage stage;
     private NavigationController navigationController;
     private AssetsController assetsController;
@@ -38,7 +37,7 @@ public class SettingsView implements Screen {
         TextButton darkBackgroundButton = new TextButton("Dark theme", assetsController.getSkin());
         TextButton lightBackgroundButton = new TextButton("Light theme", assetsController.getSkin());
 
-        TextButton mainMenuButton = new TextButton(TEXT_MAIN_MENU, assetsController.getSkin());
+        TextButton mainMenuButton = new TextButton("MAIN MENU", assetsController.getSkin());
 
         table.add(settingsTitle);
         table.row().padTop(50);

@@ -62,7 +62,7 @@ public class ResultView implements Screen {
         rootTable.add(scrollPane).size(Gdx.graphics.getWidth() * 0.9f,500);
 
         rootTable.row().padTop(50);
-        TextButton mainMenuButton = new TextButton("Main Menu",  assetsController.getSkin());
+        TextButton mainMenuButton = new TextButton("MAIN MENU",  assetsController.getSkin());
         rootTable.add(mainMenuButton).uniformX();
 
         mainMenuButton.addListener(new ChangeListener() {
