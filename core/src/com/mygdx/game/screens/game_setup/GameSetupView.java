@@ -60,21 +60,12 @@ public class GameSetupView implements Screen {
 
         stage.addActor(rootTable);
 
-        TextButton startButton = new TextButton(TEXT_START,  assetsController.getSkin());
         TextButton hostGameButton = new TextButton(TEXT_HOST_GAME,  assetsController.getSkin());
 
-        rootTable.row().pad(50, 0 , 20, 0);
-        rootTable.add(startButton).uniformX();
         rootTable.row().pad(20, 0 , 20, 0);
         rootTable.add(hostGameButton).uniformX();
         rootTable.row().pad(20, 0 , 20, 0);
 
-        startButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-            navigationController.changeScreen(NavigationModel.NavigationScreen.GAME);
-            }
-        });
         hostGameButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
