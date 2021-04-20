@@ -50,7 +50,6 @@ public class PlayerHealthScoreSystem extends IteratingSystem {
         // Set number of external players to calculate how much width each player health bar should have
         if (globalStateModel.getPlayerUpdateModels().size() != numberOfExternalPlayers){
             numberOfExternalPlayers = globalStateModel.getPlayerUpdateModels().size();
-
         }
 
         if (externalPlayerComponent != null) {
