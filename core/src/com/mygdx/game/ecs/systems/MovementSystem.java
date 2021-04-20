@@ -8,8 +8,8 @@ import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
 public class MovementSystem extends IteratingSystem {
-    private ComponentMapper<PositionComponent> positionMapper;
-    private ComponentMapper<VelocityComponent> velocityMapper;
+    private final ComponentMapper<PositionComponent> positionMapper;
+    private final ComponentMapper<VelocityComponent> velocityMapper;
 
     public MovementSystem() {
         super(Family.all(PositionComponent.class, VelocityComponent.class).get());

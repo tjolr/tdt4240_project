@@ -4,10 +4,8 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.components.BulletComponent;
-import com.mygdx.game.ecs.components.CollisionComponent;
 import com.mygdx.game.ecs.components.DirectionComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
@@ -34,7 +32,6 @@ public class BulletFactory {
         DirectionComponent direction = GameEngine.getInstance().createComponent(DirectionComponent.class);
         VelocityComponent velocity = GameEngine.getInstance().createComponent(VelocityComponent.class);
         BulletComponent bulletComp = GameEngine.getInstance().createComponent(BulletComponent.class);
-        CollisionComponent collision = GameEngine.getInstance().createComponent(CollisionComponent.class);
 
         Texture bulletSprite = new Texture("sprites/bullet.png");
         sprite.textureRegion = new TextureRegion(bulletSprite);
@@ -69,7 +66,6 @@ public class BulletFactory {
         bullet.add(direction);
         bullet.add(velocity);
         bullet.add(bulletComp);
-        bullet.add(collision);
 
         return bullet;
     }

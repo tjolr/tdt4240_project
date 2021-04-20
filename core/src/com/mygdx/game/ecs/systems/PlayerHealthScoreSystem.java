@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mygdx.game.ecs.components.BotComponent;
 import com.mygdx.game.ecs.components.ExternalPlayerComponent;
 import com.mygdx.game.ecs.components.HealthComponent;
 import com.mygdx.game.game_state.GlobalStateModel;

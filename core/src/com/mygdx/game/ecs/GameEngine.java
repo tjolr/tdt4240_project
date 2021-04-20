@@ -3,7 +3,6 @@ package com.mygdx.game.ecs;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.assets.AssetsController;
 import com.mygdx.game.ecs.components.BotSpawnComponent;
@@ -26,7 +25,6 @@ import com.mygdx.game.ecs.systems.BulletSystem;
 import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.items.PlayerUpdateModel;
 import java.util.Map;
-
 
 public class GameEngine extends PooledEngine {
     // GameEngine is a Singleton class

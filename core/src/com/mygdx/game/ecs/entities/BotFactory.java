@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.mygdx.game.ecs.GameEngine;
 import com.mygdx.game.ecs.components.BotComponent;
-import com.mygdx.game.ecs.components.CollisionComponent;
 import com.mygdx.game.ecs.components.DirectionComponent;
 import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
@@ -33,7 +32,6 @@ public class BotFactory {
         DirectionComponent direction = GameEngine.getInstance().createComponent(DirectionComponent.class);
         BotComponent botComponent = GameEngine.getInstance().createComponent(BotComponent.class);
         VelocityComponent velocity = GameEngine.getInstance().createComponent(VelocityComponent.class);
-        CollisionComponent collision = GameEngine.getInstance().createComponent(CollisionComponent.class);
 
         Texture zombieSprite = new Texture("sprites/zombie.png");
         sprite.textureRegion = new TextureRegion(zombieSprite);
@@ -66,7 +64,6 @@ public class BotFactory {
         zombie.add(direction);
         zombie.add(velocity);
         zombie.add(botComponent);
-        zombie.add(collision);
 
         return zombie;
     }
