@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.mygdx.game.assets.AssetsController;
 import com.mygdx.game.firebase.FirebaseController;
 import com.mygdx.game.firebase.FirebaseInterface;
 import com.mygdx.game.screens.navigation.NavigationModel;
@@ -12,6 +13,7 @@ public class MyGdxGame extends Game {
 	private NavigationController navigationController;
 	private FirebaseInterface firebaseInterface;
 	private FirebaseController firebaseController;
+	private AssetsController assetsController;
 
 	public MyGdxGame(FirebaseInterface firebaseInterface) {
 		this.navigationController = NavigationController.getInstance();
@@ -35,5 +37,7 @@ public class MyGdxGame extends Game {
 		if (navigationController != null) {
 			navigationController.dispose();
 		}
+		this.assetsController = AssetsController.getInstance();
+		assetsController.dispose();
 	}
 }
