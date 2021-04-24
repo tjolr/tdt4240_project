@@ -36,7 +36,6 @@ public class FirebaseService implements FirebaseInterface {
     ChildEventListener playerUpdateModelListeneer;
     DatabaseReference playerUpdateModelRef;
 
-
     public FirebaseService() {
         this.db = FirebaseDatabase.getInstance("https://progark-game-default-rtdb.europe-west1.firebasedatabase.app/");
         this.ref = db.getReference();

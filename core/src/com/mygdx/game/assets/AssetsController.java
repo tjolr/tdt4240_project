@@ -5,8 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Disposable;
 
-public class AssetsController {
+public class AssetsController implements Disposable {
     private static AssetsController assetsControllerInstance = null;
 
     private String backgroundInGamePath;
@@ -59,5 +60,11 @@ public class AssetsController {
 
     public Texture getBackgroundTextureInGame() {
         return new Texture(this.backgroundInGamePath);
+    }
+
+    @Override
+    public void dispose() {
+        sb.dispose();
+        skin.dispose();
     }
 }

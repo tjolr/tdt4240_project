@@ -7,11 +7,18 @@ import com.mygdx.game.firebase.FirebaseService;
 
 
 public class AndroidLauncher extends AndroidApplication {
-
+	MyGdxGame game;
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new MyGdxGame(new FirebaseService()), config);
+		this.game = new MyGdxGame(new FirebaseService());
+		initialize(game, config);
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		game.dispose();
 	}
 }
