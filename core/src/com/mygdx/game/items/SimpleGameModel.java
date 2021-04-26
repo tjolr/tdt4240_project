@@ -8,8 +8,7 @@ public class SimpleGameModel {
 
     public enum GameState {
         SETUP,
-        ACTIVE,
-        RESULT
+        ACTIVE
     }
 
     // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -22,6 +21,7 @@ public class SimpleGameModel {
 
     }
 
+    // Methods to prevent Android Studio warnings
     public String getGameId() {
         return gameId;
     }

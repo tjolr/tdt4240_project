@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GlobalStateModel {
+    // GlobalStateModel holds the state that needs to be accessed for many parts in the architecture
+    // GlobalStateModel is modified with the GlobalStateController
 
     private static GlobalStateModel globalStateModelInstance = null;
 
@@ -21,7 +23,7 @@ public class GlobalStateModel {
     private String gameId;
 
     private GlobalStateModel() {
-        this.clearGlobalStateModel();
+        this.resetGlobalStateModel();
     }
 
     // Singleton
@@ -33,7 +35,7 @@ public class GlobalStateModel {
         return globalStateModelInstance;
     }
 
-    public void clearGlobalStateModel(){
+    public void resetGlobalStateModel(){
         this.username = null;
         this.players = new ArrayList<>();
         this.playerUpdateModels = new HashMap<String, PlayerUpdateModel>();

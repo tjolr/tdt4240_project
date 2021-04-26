@@ -3,7 +3,7 @@ package com.mygdx.game.items;
 import java.util.ArrayList;
 
 public class GameModel extends SimpleGameModel {
-    // Firebase needs properties to be public to work
+    // Firebase Realtime Database needs properties to be public to work
     public ArrayList<String> players;
     public ArrayList<PlayerUpdateModel> playerUpdateModels;
 
@@ -18,6 +18,7 @@ public class GameModel extends SimpleGameModel {
         this.playerUpdateModels = playerUpdateModels;
     }
 
+    // Methods to prevent Android Studio warnings
     public ArrayList<String> getPlayers() {
         return players;
     }

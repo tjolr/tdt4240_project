@@ -75,7 +75,7 @@ public class GlobalStateController {
     }
 
     public void clearGlobalState(){
-        this.globalStateModel.clearGlobalStateModel();
+        this.globalStateModel.resetGlobalStateModel();
     }
 
 }

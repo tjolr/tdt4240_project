@@ -20,10 +20,12 @@ public class FirebaseService implements FirebaseInterface {
 
     FirebaseDatabase db;
     DatabaseReference ref;
+    // Firebase controller are used to communicate with the core module and update state
     FirebaseController firebaseController;
 
     String gameId;
 
+    // Stores listener and reference so that we can unsubscribe listeners when necessary
     ValueEventListener availableGamesListener;
     DatabaseReference availableGamesRef;
 
@@ -44,7 +46,7 @@ public class FirebaseService implements FirebaseInterface {
 
     // Parameter fullTarget is a string on format "parent.child.grandchild"
     // returns a reference to the deepest child in fullTarget
-    private DatabaseReference getRefFromFullTarget(String fullTarget){
+    private DatabaseReference getRefFromFullTarget(String fullTarget) {
         String[] targets = fullTarget.split("\\.");
 
         ref = db.getReference();
@@ -62,6 +64,7 @@ public class FirebaseService implements FirebaseInterface {
 
     @Override
     public void appendToArrayInDb(String target, Object value, boolean playerUpdateModel) {
+        // using the push() method to create a unique id in the database
         ref = getRefFromFullTarget(target).push();
         ref.setValue(value);
 
@@ -71,6 +74,7 @@ public class FirebaseService implements FirebaseInterface {
         }
     }
 
+    // increments the server value at given target
     @Override
     public void incrementValueInDb(String target, int incrementValue) {
         ref = getRefFromFullTarget(target);
@@ -96,6 +100,7 @@ public class FirebaseService implements FirebaseInterface {
         });
     }
 
+    // decrements the server value at given target
     @Override
     public void decrementValueInDb(String target, int decrementValue) {
         ref = getRefFromFullTarget(target);
@@ -124,8 +129,10 @@ public class FirebaseService implements FirebaseInterface {
 
     @Override
     public void listenToAvailableGames() {
+        // stores the reference in instance variable, to be able to unsubscribe from listener when needed
         availableGamesRef = db.getReference().child("game");
 
+        // stores the listener in instance variable, to be able to unsubscribe from listener when needed
         availableGamesListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -158,6 +165,8 @@ public class FirebaseService implements FirebaseInterface {
         this.gameId = gameId;
         playersInGameRef = db.getReference().child("game").child(gameId).child("players");
 
+        // For the childEventListener we have only implemented the "happy path", where players
+        // are added to a game, and not edge cases where players are removed and leave the game
         playersInGameListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

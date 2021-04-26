@@ -6,6 +6,7 @@ import com.mygdx.game.game_state.GlobalStateModel;
 import com.mygdx.game.items.SimpleGameModel;
 
 public class RoomController {
+    // Singleton
     private static RoomController roomControllerInstance = null;
     private FirebaseController firebaseController;
     private GlobalStateModel globalStateModel;

@@ -80,7 +80,7 @@ public class ResultView implements Screen {
 
         this.assetsController.renderMenuBackground();
 
-
+        // Sorting the list of players, and use an iterator to display the sorted list
         sortedPlayerUpdateModels = this.resultController.sortPlayerUpdateModelsByScore(globalStateModel.getPlayerUpdateModels());
         iter = this.sortedPlayerUpdateModels.entrySet().iterator();
 
@@ -103,7 +103,7 @@ public class ResultView implements Screen {
             playerResultTable.row();
 
             iter.remove();
-            }
+        }
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

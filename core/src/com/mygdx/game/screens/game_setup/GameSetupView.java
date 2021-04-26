@@ -105,6 +105,7 @@ public class GameSetupView implements Screen {
 
         this.assetsController.renderMenuBackground();
 
+        // Using an iterator to show list of available games
         iter = this.getNewAvailableGames().iterator();
 
         while (iter.hasNext()) {

@@ -16,6 +16,7 @@ public class AndroidLauncher extends AndroidApplication {
 		initialize(game, config);
 	}
 
+	// dispose game when application is destroyed
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();

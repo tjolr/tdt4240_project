@@ -6,6 +6,7 @@ import com.mygdx.game.items.SimpleGameModel;
 import java.util.ArrayList;
 
 public class GameSetupModel {
+    // Singleton
     private static GameSetupModel gameSetupModelInstance = null;
     private ArrayList<SimpleGameModel> availableGames;
 

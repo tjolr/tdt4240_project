@@ -32,6 +32,7 @@ public class ResultController {
         globalStateController.clearGlobalState();
     }
 
+    // Sorting the players by score, by using the ScoreComparator
     public Map<String, PlayerUpdateModel> sortPlayerUpdateModelsByScore(HashMap<String, PlayerUpdateModel> playerUpdateModels) {
         return playerUpdateModels.entrySet()
                 .stream()

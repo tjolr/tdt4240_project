@@ -9,6 +9,8 @@ import com.mygdx.game.screens.navigation.NavigationModel;
 import com.mygdx.game.screens.navigation.NavigationController;
 
 public class MyGdxGame extends Game {
+	// Main game class
+	// Initiates important key classes as the NavigationController and FirebaseController
 
 	private NavigationController navigationController;
 	private FirebaseInterface firebaseInterface;

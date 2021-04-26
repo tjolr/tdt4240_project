@@ -17,6 +17,12 @@ import com.mygdx.game.screens.set_name.SetNameView;
 import com.mygdx.game.screens.settings.SettingsView;
 
 public class NavigationController implements Disposable {
+    /*
+    * NavigationController is the main class for handling what screens should be shown, and
+    * change screens correctly.
+    * */
+
+    // Singleton
     private static NavigationController navigationControllerInstance = null;
 
     private Screen screen;
@@ -32,6 +38,8 @@ public class NavigationController implements Disposable {
 
     public void changeScreen(NavigationModel.NavigationScreen screen) {
         // Make sure that it runs on main thread which is initialized with OpenGL ES
+        // Without setting the screens to use the main thread, the network thread can try to render
+        // LibGDX graphics, which causes an error
         Gdx.app.postRunnable(()-> {
             switch(screen) {
                 case MAINMENU:
@@ -72,7 +80,7 @@ public class NavigationController implements Disposable {
         });
     }
 
-
+    // disposing the screen that is not shown
     public void setScreen(Screen screen) {
         if (this.screen != null) {
             this.screen.hide();

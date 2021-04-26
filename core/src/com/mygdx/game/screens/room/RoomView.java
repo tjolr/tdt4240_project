@@ -85,6 +85,8 @@ public class RoomView implements Screen {
 
         this.assetsController.renderMenuBackground();
 
+        // Iterate through the list of players
+        // Method used in render to get updates in realtime
         iter = this.globalStateModel.getPlayers().iterator();
 
         while(iter.hasNext()) {
