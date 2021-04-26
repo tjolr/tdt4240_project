@@ -1,83 +1,30 @@
-# tdt4240_project
+<!-- @format -->
 
-TDT4240 Programvarearkitektur gruppe 27
+# Pandemic Survival
 
-## Contributing
+## Initialization: installing, compiling and running
 
-We work on changes on a local branch. Try to have one commit per issue, and one issue per PR.
+_Pandemic Survival_ is only meant to run on android devices or emulators. Attempting to run a desktop version will lead to a game experience we did not intend. Below are the two different tested ways to run the game.
 
-Main is the default branch we work on.
+### To play the game on your android device
 
-### Commit message
+1. Download _Pandemic Survival for Android.apk_ from the index of this repository to your android device.
+2. Install the game, verifying that you are sure if prompted.
+3. You can now launch the game on your android device!
 
-```
-PA-x: message in imperative
-```
+### To play the game from Android Studio
 
-Where x is the issue number. All lowercase except 'MAT'.
+1. Make sure you have an updated version of Android Studio.
+2. Import the project.
+3. Press the green run-button on the top bar to run the project.
+4. Choose whether to run the game on an android emulator or a connected android device.
 
-For smaller changes that doesn't need an issue, use:
+## Main menu
 
-```
-chore: message in imperative
-```
+From the main menu, it is possible to navigate to the 'Settings' page and change the theme of the menu between Dark and Light. The 'Play Now'-button allows the user to choose a name, and the user is then lead to an overview of active games. From there, it is possible to join other games or host your own. If you are the host, you can at any moment choose to start the game. If you are joining someone elses lobby, you will have to wait for them to start it.
 
-### PR name
+## Playing the game
 
-Use same (or close) as commit message.
+Movement is handled with the left joystick, while shooting is handled with the right joystick. Shooting zombies causes them to disappear and your score to go up. If the zombies get to you, they will start doing damage to you. Once your health reaches zero you are sent to the score screen. An overview of the health and score of the other players in the lobby is displayed while playing, and will also be displayed on the score screen.
 
-If there is one PR for multiple issues (which we try to avoid, but it can happen), use `PA-x/y`, where x and y are the issue numbers.
-
-### Reviewing
-
-At least one person has to approve PR before merging.
-
-After all comments are resolved, the author can merge the PR.
-
-### Resolving comments
-
-We append all fixes to the commit instead of making new commits. After comment is resolved, commit with:
-
-```
-git commit --amend --no-edit
-```
-
-If you need to change the commit message use this instead:
-
-```
-git commit --amend
-```
-
-Since the upstream now differs from your local branch, use force push.
-
-```
-git push -f
-```
-
-(use with caution)
-
-### Avoid merge conflicts
-
-If you're working on a branch, and another PR has been pushed before you're able to push, we rebase on develop before we push to avoid any conflicts.
-
-1. Commit changes in feature-branch
-2. Checkout to develop
-3. Pull latest changes
-4. Checkout to feature-branch
-5. `git rebase develop`
-
-This can result in Merge Conflicts. If this happens, just resolve the conflict, save, and stage the file. You don't need to change the commit message if it isn't necessary. Then
-
-```
-git rebase --continue
-```
-
-You can also abort the rebase if you wish, with
-
-```
-git rebase --abort
-```
-
-### Merge
-
-We use rebase and merge strategy. This way we get a clean commit history. Branch is deleted upon merge, while your local is not.
+Getting the highest score means you are the best!
