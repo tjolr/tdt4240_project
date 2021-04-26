@@ -14,6 +14,7 @@ import com.mygdx.game.ecs.components.HealthComponent;
 import com.mygdx.game.game_state.GlobalStateModel;
 
 public class PlayerHealthScoreSystem extends IteratingSystem {
+    // System for showing the health and score of all players at the top of the screen.
     private final ComponentMapper<HealthComponent> healthMapper;
     private final ComponentMapper<ExternalPlayerComponent> externalPlayerMapper;
 
@@ -22,6 +23,7 @@ public class PlayerHealthScoreSystem extends IteratingSystem {
     private BitmapFont font = new BitmapFont();
     private SpriteBatch sb = new SpriteBatch();
 
+    // Colors for different statuses of the health
     private final Color green = new Color(71f/255f, 110f/255f, 45f/255f, 1f);
     private final Color yellow = new Color(226f/255f, 185f/255f, 99f/255f, 1f);
     private final Color red = new Color(190f/255f, 65f/255f, 60f/255f, 1f);

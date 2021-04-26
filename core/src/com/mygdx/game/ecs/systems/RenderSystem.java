@@ -11,6 +11,7 @@ import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.SpriteComponent;
 
 public class RenderSystem extends IteratingSystem {
+    // System for drawing every entity on the screen
     private SpriteBatch spriteBatch;
     private Array<Entity> renderQueue;
 

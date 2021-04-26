@@ -33,6 +33,7 @@ public class BotFactory {
         BotComponent botComponent = GameEngine.getInstance().createComponent(BotComponent.class);
         VelocityComponent velocity = GameEngine.getInstance().createComponent(VelocityComponent.class);
 
+        // initialize all important values, in case some components are being re-used from the component pool
         Texture zombieSprite = new Texture("sprites/zombie.png");
         sprite.textureRegion = new TextureRegion(zombieSprite);
         sprite.offset = false;

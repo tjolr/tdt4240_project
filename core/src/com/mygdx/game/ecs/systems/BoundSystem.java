@@ -19,6 +19,7 @@ public class BoundSystem extends IteratingSystem {
     private Array<Entity> renderQueue;
 
     public BoundSystem() {
+        // System for making sure the hitboxes follows the entities
         super(Family.all(SpriteComponent.class, PositionComponent.class, DirectionComponent.class).get());
 
         spriteMapper = ComponentMapper.getFor(SpriteComponent.class);
@@ -52,6 +53,7 @@ public class BoundSystem extends IteratingSystem {
         PositionComponent position = positionMapper.get(entity);
         DirectionComponent direction = directionMapper.get(entity);
         SpriteComponent sprite = spriteMapper.get(entity);
+
         if (sprite.polygon != null) {
             sprite.polygon.setPosition(position.position.x,position.position.y);
             sprite.polygon.setRotation(direction.direction.angleDeg());

@@ -10,6 +10,8 @@ import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
 public class BulletSystem extends IteratingSystem {
+    // System for making sure bullets don't live forever
+    // by decreasing lifetime and removing the ones that exceed it
     private final ComponentMapper<BulletComponent> bulletMapper;
 
     public BulletSystem() {
@@ -29,4 +31,3 @@ public class BulletSystem extends IteratingSystem {
         }
     }
 }
-
