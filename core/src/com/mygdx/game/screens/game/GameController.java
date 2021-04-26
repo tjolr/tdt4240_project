@@ -7,6 +7,7 @@ import com.mygdx.game.screens.navigation.NavigationController;
 import com.mygdx.game.screens.navigation.NavigationModel;
 
 public class GameController {
+    // Singleton
     private static GameController gameControllerInstance = null;
     private FirebaseController firebaseController;
     private GlobalStateModel globalStateModel;
@@ -36,6 +37,4 @@ public class GameController {
             navigationController.changeScreen(NavigationModel.NavigationScreen.RESULT);
         }
     }
-
-
 }

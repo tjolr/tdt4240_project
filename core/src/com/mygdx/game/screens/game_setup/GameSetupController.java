@@ -38,6 +38,8 @@ public class GameSetupController {
 
 
     public void hostCreateGame() {
+        /* Host starts a new game. Need to update local state, and write to db about
+        * the new game*/
         globalStateController.setUserAsGameHost();
 
         // Creating the arrays, and initializing with the first player which is the host itself.
@@ -74,16 +76,21 @@ public class GameSetupController {
     }
 
     public void playerJoinGame(SimpleGameModel simpleGameModel) {
+        /* Updates local state with the host name, set gameId*/
         globalStateController.setHost(simpleGameModel.host);
         globalStateController.setGameId(simpleGameModel.gameId);
 
         PlayerUpdateModel playerUpdateModel = new PlayerUpdateModel(globalStateModel.getUsername(), 100, 0);
 
+        // Every player need to add a new object to the array of player and playerUpdateModels in database.
         firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".playerUpdateModels", playerUpdateModel, true);
         firebaseController.appendToArrayInDb("game."+simpleGameModel.gameId+".players", globalStateModel.getUsername(), false);
 
+        // Stop listening to other available games
         firebaseController.stopListenToAvailableGames();
+        // Start listen to other players in the game
         firebaseController.listenToPlayersInGame(simpleGameModel.gameId);
+        // Start listen to gamestate, e.g when the host starts the game
         firebaseController.listenToGameStateInGame(simpleGameModel.gameId);
     }
 

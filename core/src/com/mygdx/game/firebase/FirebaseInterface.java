@@ -1,6 +1,9 @@
 package com.mygdx.game.firebase;
 
 public interface FirebaseInterface {
+    // Using LibGDX method for interfacing with platform specific code as described
+    // here: https://github.com/libgdx/libgdx/wiki/Interfacing-with-platform-specific-code
+
     public void writeToDb(String target, Object value);
     public void appendToArrayInDb(String target, Object value, boolean playerUpdateModel);
     public void incrementValueInDb(String target, int incrementValue);

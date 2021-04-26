@@ -8,6 +8,11 @@ import com.mygdx.game.screens.game_setup.GameSetupController;
 import java.util.ArrayList;
 
 public class FirebaseController implements FirebaseInterface {
+    // FirebaseController is the main class for communication with the platform specific code
+    // to do database requests. FirebaseController implements FirebaseInterface and uses an instance
+    // of the interface to call methods in the platform specific code
+
+    // Singleton
     private static FirebaseController firebaseControllerInstance = null;
     private FirebaseInterface firebaseInterface;
     private GameSetupController gameSetupController;
