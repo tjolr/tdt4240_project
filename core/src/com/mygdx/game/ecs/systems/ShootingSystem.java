@@ -13,6 +13,7 @@ import com.mygdx.game.ecs.components.SpriteComponent;
 import com.mygdx.game.ecs.entities.EntityFactory;
 
 public class ShootingSystem extends IteratingSystem {
+    // System for making the player shoot bullets
     private static boolean fire = false;
 
     private final ComponentMapper<PositionComponent> positionMapper;

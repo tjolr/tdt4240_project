@@ -8,6 +8,7 @@ import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
 public class MovementSystem extends IteratingSystem {
+    // System for making entities move by using their velocity component
     private final ComponentMapper<PositionComponent> positionMapper;
     private final ComponentMapper<VelocityComponent> velocityMapper;
 
@@ -22,7 +23,7 @@ public class MovementSystem extends IteratingSystem {
         PositionComponent position = positionMapper.get(entity);
         VelocityComponent velocity = velocityMapper.get(entity);
 
+        // Using deltatime to have consistent speed even though deltatime can vary with framerate
         position.position.add(velocity.velocity.scl(deltaTime * velocity.speed));
     }
 }
-

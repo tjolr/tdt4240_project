@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Polygon;
 
 public class SpriteComponent implements Component {
     public TextureRegion textureRegion = null;
-    public Polygon polygon = null;
+    public Polygon polygon = null; // for calculating collisions
     public boolean offset = false;
     public float scaleX = 1;
     public float scaleY = 1;

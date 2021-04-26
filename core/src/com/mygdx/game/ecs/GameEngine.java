@@ -50,12 +50,15 @@ public class GameEngine extends PooledEngine {
     }
 
     public void initializeEngine() {
+        // Reset the game engine if it isn't the first round
+        GameEngine.gameEngineInstance.removeAllEntities();
+        GameEngine.gameEngineInstance.clearPools();
+        // Initialize some entities that don't need their own factory.
         createBackground();
         addPlayerUpdateModels();
         addBotSpawner();
 
         player = entityFactory.createPlayer(globalStateModel.getUsername(),200, 200);
-
         gameEngineInstance.addEntity(player);
 
         gameEngineInstance.addSystem(new RenderSystem());
@@ -82,6 +85,7 @@ public class GameEngine extends PooledEngine {
         position.position.x = 0;
         position.position.y = 0;
 
+        // assetsController returns the right background according to the current theme
         sprite.textureRegion = new TextureRegion(assetsController.getBackgroundTextureInGame(),0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         background.add(position);
@@ -102,6 +106,7 @@ public class GameEngine extends PooledEngine {
     }
 
     public Entity getPlayer() {
+        // To give other packages easy access to the current player
         return player;
     }
 
@@ -116,6 +121,5 @@ public class GameEngine extends PooledEngine {
 
             index++;
         }
-
     }
 }

@@ -11,6 +11,7 @@ import com.mygdx.game.ecs.components.PositionComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
 public class BotControlSystem extends IteratingSystem {
+    // System for making the bots follow the player
     private final ComponentMapper<PositionComponent> positionMapper;
     private final ComponentMapper<DirectionComponent> directionMapper;
     private final ComponentMapper<VelocityComponent> velocityMapper;

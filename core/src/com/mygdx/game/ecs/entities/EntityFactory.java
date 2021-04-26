@@ -34,7 +34,7 @@ public class EntityFactory {
         return botFactory.createZombie(x, y);
     }
 
-    public Entity createBullet(float x, float y, float dirX, float dirY) { return bulletFactory.createBullet(x, y, dirX, dirY ); }
-
-
+    public Entity createBullet(float x, float y, float dirX, float dirY) {
+        return bulletFactory.createBullet(x, y, dirX, dirY );
+    }
 }

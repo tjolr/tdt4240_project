@@ -16,6 +16,7 @@ import com.mygdx.game.firebase.FirebaseController;
 import com.mygdx.game.game_state.GlobalStateModel;
 
 public class CollisionSystem extends IteratingSystem {
+    // System for checking if the bots collide with something, and handle the different cases
     private final ComponentMapper<SpriteComponent> spriteMapper;
     private final ComponentMapper<BotComponent> botComponentMapper;
     private GlobalStateModel globalStateModel;
@@ -58,4 +59,3 @@ public class CollisionSystem extends IteratingSystem {
         return Intersector.overlapConvexPolygons(firstPolygon, secondPolygon);
     }
 }
-

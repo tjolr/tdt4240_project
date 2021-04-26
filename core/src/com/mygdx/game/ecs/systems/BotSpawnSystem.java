@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Random;
 
 public class BotSpawnSystem extends IteratingSystem {
+    // System for spawning the bots
     private final ComponentMapper<BotSpawnComponent> botSpawnMapper;
 
     private final float width = Gdx.graphics.getWidth();
@@ -34,6 +35,7 @@ public class BotSpawnSystem extends IteratingSystem {
             getEngine().addEntity(EntityFactory.getInstance().createZombie(spawnPoint[0], spawnPoint[1]));
             botSpawnComponent.lastSpawn = currentTime;
             if (botSpawnComponent.interval > 100)
+                // for slowly decreasing interval between spawns until minimum of 100 milliseconds
                 botSpawnComponent.interval -= 10;
         }
     }
@@ -41,10 +43,11 @@ public class BotSpawnSystem extends IteratingSystem {
     private float[] getRandomSpawnPoint() {
         float[] spawnPoint = new float[2];
         Random random = new Random();
+        // how far outside the screen the bot should spawn without being seen
         float screenOffset = 250f;
 
-        int side = random.nextInt(4);
-        float placement = random.nextFloat();
+        int side = random.nextInt(4); // what side the bot should spawn from
+        float placement = random.nextFloat(); // where on the chosen side
 
         if (side == 0) {
             // left
@@ -52,10 +55,12 @@ public class BotSpawnSystem extends IteratingSystem {
             spawnPoint[1] = (height + 2 * screenOffset) * placement - screenOffset;
         } else if (side == 1) {
             // top
+            // don't need the offset here, since the sprite position starts at the bottom left.
             spawnPoint[1] = height;
             spawnPoint[0] = (width + 2 * screenOffset) * placement - screenOffset;
         } else if (side == 2) {
             //right
+            // don't need the offset here, since the sprite position starts at the bottom left.
             spawnPoint[0] = width;
             spawnPoint[1] = (height + 2 * screenOffset) * placement - screenOffset;
         } else {

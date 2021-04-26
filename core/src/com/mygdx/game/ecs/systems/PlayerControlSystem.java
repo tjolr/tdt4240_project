@@ -8,6 +8,8 @@ import com.mygdx.game.ecs.components.PlayerComponent;
 import com.mygdx.game.ecs.components.VelocityComponent;
 
 public class PlayerControlSystem extends IteratingSystem {
+    // System for setting the velocity of the player from the touchpad input
+
     // Static variables updated from the touchpad changeListener
     private static float moveJoystickX;
     private static float moveJoystickY;
@@ -29,6 +31,8 @@ public class PlayerControlSystem extends IteratingSystem {
         PlayerControlSystem.moveJoystickX = x;
         PlayerControlSystem.moveJoystickY = y;
         if (!PlayerDirectionSystem.getIsTouched()) {
+            // If the direction joystick is not in use, the movement joystick can change the
+            // direction of the player
             PlayerDirectionSystem.setDirection(x, y);
         }
     }

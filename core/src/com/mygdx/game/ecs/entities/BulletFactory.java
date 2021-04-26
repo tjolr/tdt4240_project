@@ -33,6 +33,7 @@ public class BulletFactory {
         VelocityComponent velocity = GameEngine.getInstance().createComponent(VelocityComponent.class);
         BulletComponent bulletComp = GameEngine.getInstance().createComponent(BulletComponent.class);
 
+        // initialize all important values, in case some components are being re-used from the component pool
         Texture bulletSprite = new Texture("sprites/bullet.png");
         sprite.textureRegion = new TextureRegion(bulletSprite);
         sprite.offset = true;

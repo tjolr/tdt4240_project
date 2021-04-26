@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class BotAttackSystem extends IteratingSystem {
+    // System for making sure the bots that are attacking decreases the health of the player
     private final ComponentMapper<BotComponent> botComponentMapper;
     private GlobalStateModel globalStateModel;
     private FirebaseController firebaseController;
@@ -40,7 +41,7 @@ public class BotAttackSystem extends IteratingSystem {
             );
 
             botComponent.lastAttack = currentTime;
-            botComponent.attacking = false;
+            botComponent.attacking = false; // so it won't be stuck in attack-mode after one attack
         }
     }
 }

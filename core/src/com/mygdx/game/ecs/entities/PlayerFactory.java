@@ -40,6 +40,7 @@ public class PlayerFactory {
         HealthComponent health = GameEngine.getInstance().createComponent(HealthComponent.class);
         ShootingComponent shooting = GameEngine.getInstance().createComponent(ShootingComponent.class);
 
+        // initialize all important values, in case some components are being re-used from the component pool
         Texture playerSprite = new Texture("sprites/player.png");
         sprite.textureRegion = new TextureRegion(playerSprite);
         sprite.offset = false;
@@ -81,6 +82,7 @@ public class PlayerFactory {
     }
 
     Entity createExternalPlayer(String playerName, float health, int index) {
+        // external players are just for showing health and score
         GameEngine gameEngine = GameEngine.getInstance();
         Entity playerEntity = gameEngine.createEntity();
 
